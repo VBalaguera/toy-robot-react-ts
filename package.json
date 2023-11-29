@@ -1,17 +1,26 @@
 {
   "name": "toy-robot-react-ts",
+  "version": "0.0.1",
+  "author": "Víctor Balaguera <victorbalaguera@protonmail.com>",
+  "description": "An old challenge, made this time with react.js and typescript",
+  "keywords": [
+    "react",
+    "typescript",
+    "robot",
+    "game"
+  ],
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview --port 8080"
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "vite-plugin-eslint": "^1.8.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
@@ -24,5 +33,9 @@
     "eslint-plugin-react-refresh": "^0.4.4",
     "typescript": "^5.2.2",
     "vite": "^5.0.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/VBalaguera/toy-robot-react-ts/issues"
+  },
+  "homepage": "https://github.com/VBalaguera/toy-robot-react-ts"
 }
