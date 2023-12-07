@@ -14,7 +14,17 @@ function App() {
   // placeholder for future reference
   // values will be passed directly with
   // ContextAPI
-  const direction = 'south'
+  const direction = 'north'
+
+  // not in the job specs, but perhaps creating a MessageLog
+  // // command
+  // export type Command = {
+  //   command: string
+  // }
+  // // log?
+  // type Log = {
+  //   log: Command[]
+  // }
 
   return (
     <>
@@ -27,6 +37,7 @@ function App() {
         }}
       >
         <h1>Toy robot game</h1>
+
         <Input id='command' />
 
         <Button text='click' onClick={handleClick} />

@@ -39,26 +39,87 @@ p {
 }
 
 /* Board */
+.board-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+
+  justify-content: flex-start;
+  width: 432px;
+}
+
 .board {
   width: 360px;
   height: 360px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
-  border: 1px solid #003153;
+  grid-area: 1 / 1 / 6 / 6;
+  /* border: 1px solid #003153; */
 
   position: relative;
+
+  transform: rotate(270deg)
+}
+
+
+/* TODO: revisit this */
+.board-right {
+  grid-area: 1 / 6 / 6 / 7;
+  display: flex;
+  flex-direction: column;
+  background-color: orange;
+
+  /* TODO:  */
+  transform: rotate(180deg)
+}
+
+.board-right div,
+.board-down div,
+.board-empty div {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.board-right div {
+  transform: rotate(180deg)
+}
+
+.board-down {
+  grid-area: 6 / 1 / 7 / 6;
+  background-color: red;
+  display: flex;
+}
+
+.board-empty {
+  grid-area: 6 / 6 / 7 / 7;
+  background-color: green;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
 }
 
 /* alt */
 
 .square {
   background-color: silver;
-  border: 1px solid #003153;
+  /* border: 1px solid green; */
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  transform: rotate(90deg);
+
+  width: 100%;
+  height: 100%;
 }
 
 /* alt */
@@ -131,23 +192,23 @@ p {
 
 /* Piece */
 .piece {
-  width: 30px;
-  height: 30px;
+  width: 54px;
+  height: 54px;
 }
 
 /* TODO: revise */
 .north {
-  transform: rotate(0deg)
+  transform: rotate(90deg)
 }
 
 .east {
-  transform: rotate(90deg);
-}
-
-.south {
   transform: rotate(180deg);
 }
 
-.west {
+.south {
   transform: rotate(270deg);
+}
+
+.west {
+  transform: rotate(0deg);
 }

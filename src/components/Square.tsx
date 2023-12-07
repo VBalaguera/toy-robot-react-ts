@@ -1,9 +1,10 @@
 import { ReactNode } from 'react'
 
 type SquareProps = {
-  x: number
-  y: number
+  x?: number
+  y?: number
   children?: ReactNode
+  hasRobot?: boolean
 }
 
 // placeholder for future reference
@@ -15,8 +16,9 @@ const blockedSquares = [
   [2, 3],
 ]
 
-export default function Square({ x, y, children }: SquareProps) {
+export default function Square({ x, y, children, hasRobot }: SquareProps) {
   const coordinates = [x, y]
+  console.log(hasRobot)
 
   const blocked = blockedSquares.some(
     (innerArray) =>
@@ -26,7 +28,8 @@ export default function Square({ x, y, children }: SquareProps) {
 
   return (
     <span className={`square ${blocked ? 'blocked' : ''}`}>
-      x: {x}; y: {y}
+      y: {y}
+      x: {x}
       {children}
     </span>
   )

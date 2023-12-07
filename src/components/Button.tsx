@@ -1,5 +1,8 @@
 import { ComponentPropsWithoutRef } from 'react'
 
+// important
+// remember "implement buttons to perform each command."
+
 type BaseProps = {
   text: string
 }
