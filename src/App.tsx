@@ -1,20 +1,21 @@
 import Input from './components/Input'
 
-// import Command from './components/Command'
-// import Piece from './components/Piece'
-// import robot from './assets/robot-svgrepo-com.svg'
-// import cat from './assets/Cat_silhouette.svg'
-// import spaceship from './assets/spaceship-svgrepo-com.svg'
-// import Message from './components/Message'
-// import Log from './components/Log'
 import Board from './components/Board'
 
 import Button from './components/Button'
+
+import Piece from './components/Piece'
 
 function App() {
   const handleClick = () => {
     console.log('click')
   }
+
+  // placeholder for future reference
+  // values will be passed directly with
+  // ContextAPI
+  const direction = 'south'
+
   return (
     <>
       <div
@@ -30,7 +31,9 @@ function App() {
 
         <Button text='click' onClick={handleClick} />
 
-        <Board />
+        <Board yPosition={1} xPosition={1}>
+          <Piece direction={direction} />
+        </Board>
 
         {/* <Message text='error message test' status='error' />
         <Message text='message test' />

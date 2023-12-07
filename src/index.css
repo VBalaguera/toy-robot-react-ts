@@ -46,6 +46,8 @@ p {
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
   border: 1px solid #003153;
+
+  position: relative;
 }
 
 /* alt */
@@ -53,7 +55,10 @@ p {
 .square {
   background-color: silver;
   border: 1px solid #003153;
-  padding: 0.25em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* alt */
@@ -63,7 +68,11 @@ p {
 
 .square:nth-child(odd),
 .dark {
-  background-color: crimson;
+  background-color: #003153;
+}
+
+.blocked {
+  background-color: crimson !important;
 }
 
 /* Button */
