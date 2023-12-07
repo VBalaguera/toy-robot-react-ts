@@ -2,7 +2,7 @@
 
 DESCRIPTION: This is a classic coding challenge that uses react.js and typescript.
 
-## Folder Structure
+## Project Folder Structure
 
 ```
 app/

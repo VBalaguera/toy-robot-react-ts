@@ -3,7 +3,7 @@
 :root {
   font-family: 'Roboto', sans-serif, Helvetica, Arial, sans-serif;
 
-  color-scheme: light dark;
+  color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: black;
 
@@ -26,4 +26,119 @@ a:hover {
 body {
   margin: 0;
 
+}
+
+ol,
+ul,
+li {
+  list-style: none;
+}
+
+p {
+  margin: 0;
+}
+
+/* Board */
+.board {
+  width: 360px;
+  height: 360px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  border: 1px solid #003153;
+}
+
+/* alt */
+
+.square {
+  background-color: silver;
+  border: 1px solid #003153;
+  padding: 0.25em;
+}
+
+/* alt */
+.light {
+  background-color: silver;
+}
+
+.square:nth-child(odd),
+.dark {
+  background-color: crimson;
+}
+
+/* Button */
+.button {
+  color: green;
+  font-weight: bold;
+  background-color: transparent;
+  border: 1px solid green;
+  padding: .5rem;
+  border-radius: 2px;
+}
+
+.button:hover {
+  cursor: pointer;
+  color: black;
+  background-color: green;
+  border: 1px solid black;
+}
+
+/* Command */
+
+.command,
+.message {
+  color: blue;
+  font-weight: bolder;
+}
+
+.error {
+  color: crimson;
+}
+
+/* Input */
+.input input {
+  color: green;
+  font-weight: bold;
+  background-color: transparent;
+  border: 1px solid white;
+  padding: .5rem;
+  border-radius: 2px;
+}
+
+
+.input input:focus {
+  outline: none;
+}
+
+/* Log */
+.log {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+
+/* Piece */
+.piece {
+  width: 30px;
+  height: 30px;
+}
+
+/* TODO: revise */
+.north {
+  transform: rotate(0deg)
+}
+
+.east {
+  transform: rotate(90deg);
+}
+
+.south {
+  transform: rotate(180deg);
+}
+
+.west {
+  transform: rotate(270deg);
 }
