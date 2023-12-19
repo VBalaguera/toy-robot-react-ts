@@ -9,9 +9,11 @@ import {
   errorMessage,
 } from '../store/game-slice'
 
+import { allBlockedSquares, compareArrays } from '../utils'
+
 import Input from './Input'
 import Button from './Button'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useState, useEffect } from 'react'
 import Command from './Command'
 
 export default function Form() {
@@ -22,6 +24,19 @@ export default function Form() {
   const [command, setCommand] = useState('')
 
   const dispatch = useGameDispatch()
+
+  const blockedSquares = useGameSelector((state) => state.game.blockedSquares)
+
+  useEffect(() => {
+    const isBoardBlocked = compareArrays(allBlockedSquares, blockedSquares)
+    if (isBoardBlocked) {
+      dispatch(
+        errorMessage(
+          "All the walls are covered! The robot wanted to play today, but you didn't allowed it to!"
+        )
+      )
+    }
+  }, [dispatch, blockedSquares])
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -49,6 +64,18 @@ export default function Form() {
             xLocation: Number(commands[2]),
           })
         )
+      } else if (
+        commands[0] === 'LEFT' ||
+        commands[0] === 'RIGHT' ||
+        commands[0] === 'REPORT'
+      ) {
+        dispatch(
+          errorMessage(
+            'Command not supported. You need to place a robot first.'
+          )
+        )
+      } else if (commands[0] === 'RESET') {
+        dispatch(resetGame())
       } else {
         dispatch(errorMessage('Command not supported'))
       }

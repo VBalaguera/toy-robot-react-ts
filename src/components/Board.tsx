@@ -1,9 +1,7 @@
 // display game's table
-// receives as props coordinates
-// and positions its children
-// in this case, Piece.tsx
 
 import { type ReactNode } from 'react'
+
 import Square from './Square'
 
 type BoardProps = {
@@ -15,11 +13,6 @@ type BoardProps = {
 export default function Board({ xLocation, yLocation, children }: BoardProps) {
   const rows = 5
   const columns = 5
-
-  // placeholder for future reference
-  // values will be passed directly with
-  // ContextAPI
-  // const robotPosition = [xLocation, yPosition]
 
   return (
     <div className='board-container'>
