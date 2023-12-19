@@ -7,9 +7,9 @@ import { type ReactNode } from 'react'
 import Square from './Square'
 
 type BoardProps = {
-  yLocation: number
-  xLocation: number
-  children: ReactNode
+  yLocation?: number
+  xLocation?: number
+  children?: ReactNode
 }
 
 export default function Board({ xLocation, yLocation, children }: BoardProps) {
@@ -57,7 +57,7 @@ export default function Board({ xLocation, yLocation, children }: BoardProps) {
             justifyContent: 'center',
           }}
         >
-          {children}
+          {xLocation !== undefined && yLocation !== undefined && children}
         </div>
       </div>
       <div className='board-down'>

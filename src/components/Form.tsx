@@ -1,5 +1,5 @@
 import { useGameDispatch, useGameSelector } from '../store/hooks'
-import { movePiece } from '../store/game-slice'
+import { movePiece, placeRobot } from '../store/game-slice'
 
 import Input from './Input'
 import Button from './Button'
@@ -12,6 +12,8 @@ export default function Form() {
   const hasRobot = useGameSelector((state) => state.game.hasRobot)
 
   const [command, setCommand] = useState('')
+
+  const [error, setError] = useState('')
 
   const dispatch = useGameDispatch()
 
@@ -29,9 +31,32 @@ export default function Form() {
     console.log(commands)
 
     if (!hasRobot) {
-      console.log('error')
+      if (commands[0] === 'PLACE_ROBOT') {
+        dispatch(
+          placeRobot({
+            yLocation: Number(commands[1]),
+            xLocation: Number(commands[2]),
+            direction: commands[3],
+            hasRobot: true,
+          })
+        )
+      } else {
+        console.log('error')
+        setError('please place a robot first')
+      }
     } else {
       switch (commands[0]) {
+        // PLACE_ROBOT
+        case 'PLACE_ROBOT':
+          dispatch(
+            placeRobot({
+              yLocation: Number(commands[1]),
+              xLocation: Number(commands[2]),
+              direction: commands[3],
+            })
+          )
+          break
+        // MOVE
         case 'LEFT':
           switch (direction) {
             case 'NORTH':
@@ -71,6 +96,7 @@ export default function Form() {
         default:
           return
       }
+      setError('')
     }
 
     setCommand('')
@@ -89,6 +115,7 @@ export default function Form() {
         />
 
         <Button text='submit' />
+        {error && <span>{error}</span>}
       </form>
     </div>
   )
