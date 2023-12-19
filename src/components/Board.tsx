@@ -7,20 +7,19 @@ import { type ReactNode } from 'react'
 import Square from './Square'
 
 type BoardProps = {
-  xPosition: number
-  yPosition: number
+  yLocation: number
+  xLocation: number
   children: ReactNode
 }
 
-export default function Board({ xPosition, yPosition, children }: BoardProps) {
+export default function Board({ xLocation, yLocation, children }: BoardProps) {
   const rows = 5
   const columns = 5
 
   // placeholder for future reference
   // values will be passed directly with
   // ContextAPI
-  // const robotPosition = [xPosition, yPosition]
-  console.log(children)
+  // const robotPosition = [xLocation, yPosition]
 
   return (
     <div className='board-container'>
@@ -51,8 +50,8 @@ export default function Board({ xPosition, yPosition, children }: BoardProps) {
             width: '72px',
             height: '72px',
             position: 'absolute',
-            top: `calc(0px + 72px * ${yPosition})`,
-            left: `calc(0px + 72px * ${xPosition})`,
+            top: `calc(0px + 72px * ${yLocation})`,
+            left: `calc(0px + 72px * ${xLocation})`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',

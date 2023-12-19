@@ -153,6 +153,10 @@ p {
   border: 1px solid black;
 }
 
+.button:disabled {
+  cursor: not-allowed;
+}
+
 /* Command */
 
 .command,
@@ -196,19 +200,19 @@ p {
   height: 54px;
 }
 
-/* TODO: revise */
-.north {
-  transform: rotate(90deg)
+/* TODO: revise transitions */
+.NORTH {
+  transform: rotate(90deg);
 }
 
-.east {
+.EAST {
   transform: rotate(180deg);
 }
 
-.south {
+.SOUTH {
   transform: rotate(270deg);
 }
 
-.west {
+.WEST {
   transform: rotate(0deg);
 }
