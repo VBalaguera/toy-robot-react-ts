@@ -1,34 +1,36 @@
 import { useGameDispatch, useGameSelector } from '../store/hooks'
-import { movePiece, placeRobot } from '../store/game-slice'
+import {
+  turnLeft,
+  turnRight,
+  placeRobot,
+  placeWall,
+  report,
+  resetGame,
+  errorMessage,
+} from '../store/game-slice'
 
 import Input from './Input'
 import Button from './Button'
 import { FormEvent, useState } from 'react'
+import Command from './Command'
 
 export default function Form() {
-  const yLocation = useGameSelector((state) => state.game.yLocation)
-  const xLocation = useGameSelector((state) => state.game.xLocation)
-  const direction = useGameSelector((state) => state.game.direction)
-  const hasRobot = useGameSelector((state) => state.game.hasRobot)
+  const { yLocation, xLocation, direction, hasRobot, error } = useGameSelector(
+    (state) => state.game
+  )
 
   const [command, setCommand] = useState('')
-
-  const [error, setError] = useState('')
 
   const dispatch = useGameDispatch()
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+
     const formData = new FormData(event.currentTarget)
     const data = Object.fromEntries(formData)
 
     const processedInput = String(data.command).toUpperCase()
     const commands = processedInput.split(/[,\s]+/)
-
-    console.log(yLocation, xLocation, direction, hasRobot)
-
-    console.log(data.command)
-    console.log(commands)
 
     if (!hasRobot) {
       if (commands[0] === 'PLACE_ROBOT') {
@@ -40,9 +42,15 @@ export default function Form() {
             hasRobot: true,
           })
         )
+      } else if (commands[0] === 'PLACE_WALL') {
+        dispatch(
+          placeWall({
+            yLocation: Number(commands[1]),
+            xLocation: Number(commands[2]),
+          })
+        )
       } else {
-        console.log('error')
-        setError('please place a robot first')
+        dispatch(errorMessage('Command not supported'))
       }
     } else {
       switch (commands[0]) {
@@ -56,47 +64,33 @@ export default function Form() {
             })
           )
           break
+        //   PLACE_WALL
+        case 'PLACE_WALL':
+          dispatch(
+            placeWall({
+              yLocation: Number(commands[1]),
+              xLocation: Number(commands[2]),
+            })
+          )
+          break
         // MOVE
         case 'LEFT':
-          switch (direction) {
-            case 'NORTH':
-              dispatch(movePiece('WEST'))
-              break
-            case 'WEST':
-              dispatch(movePiece('SOUTH'))
-              break
-            case 'SOUTH':
-              dispatch(movePiece('EAST'))
-              break
-            case 'EAST':
-              dispatch(movePiece('NORTH'))
-              break
-            default:
-              return
-          }
+          dispatch(turnLeft())
           break
         case 'RIGHT':
-          switch (direction) {
-            case 'NORTH':
-              dispatch(movePiece('EAST'))
-              break
-            case 'WEST':
-              dispatch(movePiece('NORTH'))
-              break
-            case 'SOUTH':
-              dispatch(movePiece('WEST'))
-              break
-            case 'EAST':
-              dispatch(movePiece('SOUTH'))
-              break
-            default:
-              return
-          }
+          dispatch(turnRight())
+          break
+        //   REPORT
+        case 'REPORT':
+          console.log(`${yLocation},${xLocation},${direction}`)
+          dispatch(report())
+          break
+        case 'RESET':
+          dispatch(resetGame())
           break
         default:
-          return
+          dispatch(errorMessage('Command not recognized'))
       }
-      setError('')
     }
 
     setCommand('')
@@ -115,7 +109,8 @@ export default function Form() {
         />
 
         <Button text='submit' />
-        {error && <span>{error}</span>}
+
+        {error && <Command status='error' text={error} />}
       </form>
     </div>
   )

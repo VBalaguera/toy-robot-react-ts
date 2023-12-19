@@ -9,7 +9,7 @@ type SquareProps = {
 }
 
 export default function Square({ x, y, children }: SquareProps) {
-  const coordinates = [x, y]
+  const coordinates = [y, x]
 
   const blockedSquares = useGameSelector((state) => state.game.blockedSquares)
 
@@ -21,8 +21,8 @@ export default function Square({ x, y, children }: SquareProps) {
 
   return (
     <span className={`square ${blocked ? 'blocked' : ''}`}>
-      y: {y}
-      x: {x}
+      y: {y + 1}
+      x: {x + 1}
       {children}
     </span>
   )

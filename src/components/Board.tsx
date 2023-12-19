@@ -27,7 +27,7 @@ export default function Board({ xLocation, yLocation, children }: BoardProps) {
         {Array.from({ length: rows }, (_, rowIndex) =>
           Array.from({ length: columns }, (_, colIndex) => (
             <>
-              <Square x={colIndex} y={rowIndex} />
+              <Square x={rowIndex} y={colIndex} />
             </>
             // <>
             //   {robotPosition.every(

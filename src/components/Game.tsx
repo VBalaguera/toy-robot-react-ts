@@ -1,12 +1,12 @@
 import { useGameDispatch, useGameSelector } from '../store/hooks'
-import { movePiece, spawnRobot, resetGame } from '../store/game-slice'
+import { turnLeft, turnRight, spawnRobot, resetGame } from '../store/game-slice'
 
-import Input from './Input'
 import Board from './Board'
 import Button from './Button'
 
 import Piece from './Piece'
 import Form from './Form'
+import CommandsLog from './CommandsLog'
 
 function Game() {
   const yLocation = useGameSelector((state) => state.game.yLocation)
@@ -24,41 +24,10 @@ function Game() {
 
   //   LEFT
   function handleMovePieceLeft() {
-    switch (direction) {
-      case 'NORTH':
-        dispatch(movePiece('WEST'))
-        break
-      case 'WEST':
-        dispatch(movePiece('SOUTH'))
-        break
-      case 'SOUTH':
-        dispatch(movePiece('EAST'))
-        break
-      case 'EAST':
-        dispatch(movePiece('NORTH'))
-        break
-      default:
-        return
-    }
+    dispatch(turnLeft())
   }
   function handleMovePieceRight() {
-    console.log(direction)
-    switch (direction) {
-      case 'NORTH':
-        dispatch(movePiece('EAST'))
-        break
-      case 'WEST':
-        dispatch(movePiece('NORTH'))
-        break
-      case 'SOUTH':
-        dispatch(movePiece('WEST'))
-        break
-      case 'EAST':
-        dispatch(movePiece('SOUTH'))
-        break
-      default:
-        return
-    }
+    dispatch(turnRight())
   }
 
   function handleSpawnRobot() {
@@ -90,24 +59,23 @@ function Game() {
           flexDirection: 'column',
           gap: '10px',
           padding: '1rem',
+          width: '1000px',
         }}
       >
         <h1>Toy robot game</h1>
-
-        <Input id='command' />
 
         <Form />
 
         <Button text='REPORT' onClick={handleReport} />
 
         <Button
-          text='MOVE LEFT'
+          text='TURN LEFT'
           onClick={handleMovePieceLeft}
           disabled={!hasRobot}
         />
 
         <Button
-          text='MOVE RIGHT'
+          text='TURN RIGHT'
           onClick={handleMovePieceRight}
           disabled={!hasRobot}
         />
@@ -122,6 +90,8 @@ function Game() {
         <Board yLocation={yLocation} xLocation={xLocation}>
           <Piece direction={direction} />
         </Board>
+
+        <CommandsLog />
 
         {/* <Message text='error message test' status='error' />
         <Message text='message test' />
