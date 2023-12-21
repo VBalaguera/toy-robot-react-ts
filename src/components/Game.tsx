@@ -1,5 +1,11 @@
 import { useGameDispatch, useGameSelector } from '../store/hooks'
-import { turnLeft, turnRight, spawnRobot, resetGame } from '../store/game-slice'
+import {
+  turnLeft,
+  turnRight,
+  spawnRobot,
+  resetGame,
+  report,
+} from '../store/game-slice'
 
 import Board from './Board'
 import Button from './Button'
@@ -7,6 +13,7 @@ import Button from './Button'
 import Piece from './Piece'
 import Form from './Form'
 import CommandsLog from './CommandsLog'
+import Container from './ui/Container'
 
 function Game() {
   const yLocation = useGameSelector((state) => state.game.yLocation)
@@ -20,6 +27,7 @@ function Game() {
   //   REPORT
   const handleReport = () => {
     console.log(`${yLocation},${xLocation},${direction}`)
+    dispatch(report())
   }
 
   //   LEFT
@@ -52,46 +60,89 @@ function Game() {
   //   log: Command[]
   // }
   return (
-    <>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-          padding: '1rem',
-          width: '1000px',
-        }}
-      >
-        <h1>Toy robot game</h1>
+    <div
+      style={{
+        display: 'flex',
+        alignContent: 'center',
+        justifyContent: 'center',
+        width: '100%',
+      }}
+    >
+      <Container>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px',
+            width: '100%',
+          }}
+        >
+          <h1>Toy robot game</h1>
 
-        <Form />
+          <Board yLocation={yLocation} xLocation={xLocation}>
+            <Piece direction={direction} />
+          </Board>
+        </div>
 
-        <Button text='REPORT' onClick={handleReport} />
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '20px',
+            width: '100%',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '10px',
+              width: '50%',
+              height: 'auto',
+            }}
+          >
+            <Form />
 
-        <Button
-          text='TURN LEFT'
-          onClick={handleMovePieceLeft}
-          disabled={!hasRobot}
-        />
+            <Button text='REPORT' onClick={handleReport} disabled={!hasRobot} />
 
-        <Button
-          text='TURN RIGHT'
-          onClick={handleMovePieceRight}
-          disabled={!hasRobot}
-        />
+            <Button
+              text='TURN LEFT'
+              onClick={handleMovePieceLeft}
+              disabled={!hasRobot}
+            />
 
-        <Button
-          text={`${hasRobot === true ? 'delete robot' : 'spawn robot'}`}
-          onClick={handleSpawnRobot}
-        />
+            <Button
+              text='TURN RIGHT'
+              onClick={handleMovePieceRight}
+              disabled={!hasRobot}
+            />
 
-        <Button text='reset game' onClick={handleResetGame} />
+            <Button
+              text={`${hasRobot === true ? 'delete robot' : 'spawn robot'}`}
+              onClick={handleSpawnRobot}
+            />
 
-        <Board yLocation={yLocation} xLocation={xLocation}>
-          <Piece direction={direction} />
-        </Board>
+            <Button text='reset game' onClick={handleResetGame} />
+          </div>
 
-        <CommandsLog />
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+
+              width: '50%',
+              height: '100%',
+            }}
+          >
+            <CommandsLog />
+          </div>
+        </div>
 
         {/* <Message text='error message test' status='error' />
         <Message text='message test' />
@@ -108,8 +159,8 @@ function Game() {
           <Command text='command error test' status='error' />
           <Command text='command test' />
         </Log> */}
-      </div>
-    </>
+      </Container>
+    </div>
   )
 }
 export default Game

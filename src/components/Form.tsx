@@ -4,6 +4,7 @@ import {
   turnRight,
   placeRobot,
   placeWall,
+  move,
   report,
   resetGame,
   errorMessage,
@@ -26,9 +27,9 @@ export default function Form() {
   const dispatch = useGameDispatch()
 
   const blockedSquares = useGameSelector((state) => state.game.blockedSquares)
+  const isBoardBlocked = compareArrays(allBlockedSquares, blockedSquares)
 
   useEffect(() => {
-    const isBoardBlocked = compareArrays(allBlockedSquares, blockedSquares)
     if (isBoardBlocked) {
       dispatch(
         errorMessage(
@@ -46,18 +47,36 @@ export default function Form() {
 
     const processedInput = String(data.command).toUpperCase()
     const commands = processedInput.split(/[,\s]+/)
+    console.log(commands)
+    console.log(commands[0])
+    console.log(commands[1])
+    console.log(commands[2])
+    console.log(commands[3])
 
     if (!hasRobot) {
+      // TODO: switch/case here
       if (commands[0] === 'PLACE_ROBOT') {
-        dispatch(
-          placeRobot({
-            yLocation: Number(commands[1]),
-            xLocation: Number(commands[2]),
-            direction: commands[3],
-            hasRobot: true,
-          })
-        )
+        // TODO: additional checks for command length?
+        if (
+          commands[3] === 'NORTH' ||
+          commands[3] === 'WEST' ||
+          commands[3] === 'SOUTH' ||
+          commands[3] === 'EAST'
+        ) {
+          dispatch(
+            placeRobot({
+              yLocation: Number(commands[1]),
+              xLocation: Number(commands[2]),
+              direction: commands[3],
+              hasRobot: true,
+            })
+          )
+        } else {
+          // TODO: fix error message here
+          console.log('please write a proper direction')
+        }
       } else if (commands[0] === 'PLACE_WALL') {
+        // TODO: additional checks for command length
         dispatch(
           placeWall({
             yLocation: Number(commands[1]),
@@ -83,13 +102,24 @@ export default function Form() {
       switch (commands[0]) {
         // PLACE_ROBOT
         case 'PLACE_ROBOT':
-          dispatch(
-            placeRobot({
-              yLocation: Number(commands[1]),
-              xLocation: Number(commands[2]),
-              direction: commands[3],
-            })
-          )
+          if (
+            commands[3] === 'NORTH' ||
+            commands[3] === 'WEST' ||
+            commands[3] === 'SOUTH' ||
+            commands[3] === 'EAST'
+          ) {
+            dispatch(
+              placeRobot({
+                yLocation: Number(commands[1]),
+                xLocation: Number(commands[2]),
+                direction: commands[3],
+                hasRobot: true,
+              })
+            )
+          } else {
+            // TODO: fix error message here
+            console.log('please write a proper direction')
+          }
           break
         //   PLACE_WALL
         case 'PLACE_WALL':
@@ -115,6 +145,9 @@ export default function Form() {
         case 'RESET':
           dispatch(resetGame())
           break
+        case 'MOVE':
+          dispatch(move())
+          break
         default:
           dispatch(errorMessage('Command not recognized'))
       }
@@ -124,8 +157,28 @@ export default function Form() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
+      }}
+    >
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '10px',
+          width: '100%',
+          height: '100%',
+        }}
+      >
         <Input
           name='command'
           id='command'
@@ -135,9 +188,9 @@ export default function Form() {
           required
         />
 
-        <Button text='submit' />
+        <Button text='submit' disabled={isBoardBlocked} />
 
-        {error && <Command status='error' text={error} />}
+        {error && <Command status='error'>{error}</Command>}
       </form>
     </div>
   )

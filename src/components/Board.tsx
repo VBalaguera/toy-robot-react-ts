@@ -10,7 +10,7 @@ type BoardProps = {
   children?: ReactNode
 }
 
-export default function Board({ xLocation, yLocation, children }: BoardProps) {
+export default function Board({ yLocation, xLocation, children }: BoardProps) {
   const rows = 5
   const columns = 5
 
@@ -43,8 +43,9 @@ export default function Board({ xLocation, yLocation, children }: BoardProps) {
             width: '72px',
             height: '72px',
             position: 'absolute',
-            top: `calc(0px + 72px * ${yLocation})`,
-            left: `calc(0px + 72px * ${xLocation})`,
+            top: `calc(0px + 72px * ${xLocation})`,
+            left: `calc(0px + 72px * ${yLocation})`,
+            // adjusting position by inverting both axis
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
