@@ -2,8 +2,9 @@ import { useGameDispatch, useGameSelector } from '../store/hooks'
 import {
   turnLeft,
   turnRight,
-  spawnRobot,
   resetGame,
+  errorMessage,
+  move,
   report,
 } from '../store/game-slice'
 
@@ -26,39 +27,31 @@ function Game() {
   //   COMMANDS
   //   REPORT
   const handleReport = () => {
+    dispatch(errorMessage(''))
     console.log(`${yLocation},${xLocation},${direction}`)
     dispatch(report())
   }
 
   //   LEFT
   function handleMovePieceLeft() {
+    dispatch(errorMessage(''))
     dispatch(turnLeft())
   }
   function handleMovePieceRight() {
+    dispatch(errorMessage(''))
     dispatch(turnRight())
   }
 
-  function handleSpawnRobot() {
-    dispatch(spawnRobot())
-  }
-
   function handleResetGame() {
+    dispatch(errorMessage(''))
     dispatch(resetGame())
   }
 
-  // placeholder for future reference
-  // values will be passed directly with
-  // ContextAPI
+  function handleMove() {
+    dispatch(errorMessage(''))
+    dispatch(move())
+  }
 
-  // not in the job specs, but perhaps creating a MessageLog
-  // // command
-  // export type Command = {
-  //   command: string
-  // }
-  // // log?
-  // type Log = {
-  //   log: Command[]
-  // }
   return (
     <div
       style={{
@@ -108,6 +101,8 @@ function Game() {
           >
             <Form />
 
+            <Button text='MOVE' onClick={handleMove} disabled={!hasRobot} />
+
             <Button text='REPORT' onClick={handleReport} disabled={!hasRobot} />
 
             <Button
@@ -120,11 +115,6 @@ function Game() {
               text='TURN RIGHT'
               onClick={handleMovePieceRight}
               disabled={!hasRobot}
-            />
-
-            <Button
-              text={`${hasRobot === true ? 'delete robot' : 'spawn robot'}`}
-              onClick={handleSpawnRobot}
             />
 
             <Button text='reset game' onClick={handleResetGame} />
@@ -149,11 +139,6 @@ function Game() {
 
         <Command text='command error test' status='error' />
         <Command text='command test' /> */}
-
-        {/* <Piece image={robot} direction='north' />
-        <Piece image={cat} direction='east' />
-        <Piece image={spaceship} direction='west' />
-        <Piece image={spaceship} direction='south' /> */}
 
         {/* <Log>
           <Command text='command error test' status='error' />

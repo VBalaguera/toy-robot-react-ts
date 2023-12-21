@@ -41,6 +41,8 @@ export default function Form() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    // TODO: revisit this
+    dispatch(errorMessage(''))
 
     const formData = new FormData(event.currentTarget)
     const data = Object.fromEntries(formData)

@@ -1,5 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
+import { checkIfArrayContainsArray } from '../utils'
+
 export type BlockedSquare = [y: number, x: number]
 
 export type Command = [
@@ -48,10 +50,9 @@ export const gameSlice = createSlice({
         action.payload.yLocation - 1,
         action.payload.xLocation - 1,
       ]
-      const alreadyBlocked = state.blockedSquares.some(
-        (innerArray) =>
-          innerArray.length === coordinates.length &&
-          innerArray.every((value, index) => value === coordinates[index])
+      const alreadyBlocked = checkIfArrayContainsArray(
+        state.blockedSquares,
+        coordinates
       )
       if (alreadyBlocked) {
         state.error = 'Already blocked'
@@ -94,27 +95,14 @@ export const gameSlice = createSlice({
         xLocation: number
       }>
     ) {
-      // find if the set of coordinates
-      // are within blockedSquares
-
       const coordinates = [
         action.payload.yLocation - 1,
         action.payload.xLocation - 1,
       ]
-      console.log('y coordinate', action.payload.yLocation - 1)
-      console.log('x coordinate', action.payload.xLocation - 1)
-      console.log('coordinates', coordinates)
-      console.log('blockedSquares', state.blockedSquares)
-      const alreadyBlocked = state.blockedSquares.some(
-        (innerArray) =>
-          innerArray.length === coordinates.length &&
-          innerArray.every((value, index) => value === coordinates[index])
+      const alreadyBlocked = checkIfArrayContainsArray(
+        state.blockedSquares,
+        coordinates
       )
-
-      console.log('y robot location', state.yLocation)
-      console.log('x robot location', state.yLocation)
-
-      console.log('already blocked', alreadyBlocked)
 
       if (alreadyBlocked) {
         console.log('already blocked')
@@ -185,84 +173,81 @@ export const gameSlice = createSlice({
     // MOVE
     move(state) {
       // if no robot, ignore command
-
       if (!state.hasRobot) {
         state.error = 'Please place a robot first!'
       } else if (
         state.yLocation !== undefined &&
         state.xLocation !== undefined
       ) {
-        const coordinates = [state.yLocation + 1, state.xLocation]
+        let coordinates: number[]
         switch (state.direction) {
           case 'NORTH':
             console.log('north')
             {
-              const alreadyBlocked = state.blockedSquares.some(
-                (innerArray) =>
-                  innerArray.length === coordinates.length &&
-                  innerArray.every(
-                    (value, index) => value === coordinates[index]
-                  )
+              coordinates = [state.yLocation + 1, state.xLocation]
+              const alreadyBlocked = checkIfArrayContainsArray(
+                state.blockedSquares,
+                coordinates
               )
 
               if (alreadyBlocked) {
-                console.log('already blocked')
+                state.error = 'Already blocked'
+              } else if (state.yLocation === 4) {
+                state.yLocation = 0
               } else {
-                state.xLocation++
+                state.yLocation++
               }
             }
             break
           case 'WEST':
             console.log('WEST')
             {
-              const alreadyBlocked = state.blockedSquares.some(
-                (innerArray) =>
-                  innerArray.length === coordinates.length &&
-                  innerArray.every(
-                    (value, index) => value === coordinates[index]
-                  )
+              coordinates = [state.yLocation, state.xLocation - 1]
+              const alreadyBlocked = checkIfArrayContainsArray(
+                state.blockedSquares,
+                coordinates
               )
 
               if (alreadyBlocked) {
-                console.log('already blocked')
+                state.error = 'Already blocked'
+              } else if (state.xLocation === 0) {
+                state.xLocation = 4
               } else {
-                state.yLocation++
+                state.xLocation--
               }
             }
             break
           case 'SOUTH':
             console.log('south')
             {
-              const alreadyBlocked = state.blockedSquares.some(
-                (innerArray) =>
-                  innerArray.length === coordinates.length &&
-                  innerArray.every(
-                    (value, index) => value === coordinates[index]
-                  )
+              coordinates = [state.yLocation - 1, state.xLocation]
+              const alreadyBlocked = checkIfArrayContainsArray(
+                state.blockedSquares,
+                coordinates
               )
-
               if (alreadyBlocked) {
-                console.log('already blocked')
+                state.error = 'Already blocked'
+              } else if (state.yLocation === 0) {
+                state.yLocation = 4
+              } else {
+                state.yLocation--
               }
-
-              state.xLocation--
             }
             break
           case 'EAST':
             console.log('east')
             {
-              const alreadyBlocked = state.blockedSquares.some(
-                (innerArray) =>
-                  innerArray.length === coordinates.length &&
-                  innerArray.every(
-                    (value, index) => value === coordinates[index]
-                  )
+              coordinates = [state.yLocation, state.xLocation + 1]
+              const alreadyBlocked = checkIfArrayContainsArray(
+                state.blockedSquares,
+                coordinates
               )
-
               if (alreadyBlocked) {
-                console.log('already blocked')
+                state.error = 'Already blocked'
+              } else if (state.xLocation === 4) {
+                state.xLocation = 0
               } else {
-                state.yLocation--
+                state.xLocation++
               }
             }
             break
