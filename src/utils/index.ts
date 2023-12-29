@@ -1,3 +1,6 @@
+import { Command } from '../store/game-slice'
+
+// all board's squares' positions
 const allBlockedSquares = [
   [0, 0],
   [0, 1],
@@ -25,6 +28,9 @@ const allBlockedSquares = [
   [4, 3],
   [4, 4],
 ]
+
+// compares two arrays of numbers,
+// returns boolean
 function compareArrays(
   array1: Array<number>[],
   array2: Array<number>[]
@@ -32,6 +38,8 @@ function compareArrays(
   return array1.length === array2.length
 }
 
+// checks if array of arrays contains array,
+// returns boolean
 function checkIfArrayContainsArray(
   array1: Array<number>[],
   array2: Array<number>
@@ -43,4 +51,27 @@ function checkIfArrayContainsArray(
   )
 }
 
-export { compareArrays, allBlockedSquares, checkIfArrayContainsArray }
+// checks if array is
+// already presented in an array of arrays
+// in its last position
+function checkLastArray(
+  arrayOfArrays: Command[],
+  newArray: Command
+): Command[] | void {
+  if (arrayOfArrays.length > 0) {
+    const lastArray = arrayOfArrays[arrayOfArrays.length - 1]
+    const areValuesEqual = lastArray.every(
+      (value, index) => value === newArray[index]
+    )
+    if (areValuesEqual) return
+  }
+  arrayOfArrays.push(newArray)
+  return arrayOfArrays
+}
+
+export {
+  compareArrays,
+  allBlockedSquares,
+  checkIfArrayContainsArray,
+  checkLastArray,
+}

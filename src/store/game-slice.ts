@@ -1,6 +1,8 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import { checkIfArrayContainsArray } from '../utils'
+import { checkIfArrayContainsArray, checkLastArray } from '../utils'
+
+import { placeRobotOnBoard, placeWallOnBoard } from './reducers'
 
 export type BlockedSquare = [y: number, x: number]
 
@@ -37,107 +39,9 @@ export const gameSlice = createSlice({
   initialState,
   reducers: {
     // PLACE ROBOT:
-    placeRobot(
-      state,
-      action: PayloadAction<{
-        yLocation: number
-        xLocation: number
-        direction: string
-        hasRobot?: boolean
-      }>
-    ) {
-      const coordinates = [
-        action.payload.yLocation - 1,
-        action.payload.xLocation - 1,
-      ]
-      const alreadyBlocked = checkIfArrayContainsArray(
-        state.blockedSquares,
-        coordinates
-      )
-      if (alreadyBlocked) {
-        state.error = 'Already blocked'
-      } else if (
-        action.payload.yLocation > 5 ||
-        action.payload.yLocation < 0 ||
-        action.payload.xLocation > 5 ||
-        action.payload.xLocation < 0
-      ) {
-        state.error =
-          'Invalid coordinates. Please enter valid coordinates: [0 to 5, 0 to 5]'
-      } else if (!action.payload.direction) {
-        state.error = 'Please enter a direction'
-      }
-      // else if (
-      //   action.payload.direction !== 'WEST' ||
-      //   action.payload.direction !== 'SOUTH' ||
-      //   action.payload.direction !== 'EAST' ||
-      //   action.payload.direction !== 'NORTH'
-      // ) {
-      //   state.error = 'Please enter a valid direction'
-      // }
-      else {
-        console.log(
-          'yLocation:',
-          action.payload.yLocation - 1,
-          'xLocation:',
-          action.payload.xLocation - 1,
-          'direction',
-          action.payload.direction,
-          'hasRobot',
-          action.payload.hasRobot
-        )
-        return {
-          ...state,
-          yLocation: action.payload.yLocation - 1,
-          xLocation: action.payload.xLocation - 1,
-          direction: action.payload.direction,
-          hasRobot: true,
-        }
-      }
-
-      // TODO: this can be improved,
-      // vastly
-    },
+    placeRobot: placeRobotOnBoard,
     // PLACE WALL:
-    placeWall(
-      state,
-      action: PayloadAction<{
-        yLocation: number
-        xLocation: number
-      }>
-    ) {
-      const coordinates = [
-        action.payload.yLocation - 1,
-        action.payload.xLocation - 1,
-      ]
-      const alreadyBlocked = checkIfArrayContainsArray(
-        state.blockedSquares,
-        coordinates
-      )
-
-      if (alreadyBlocked) {
-        console.log('already blocked')
-        state.error = 'already blocked'
-      } else if (
-        state.yLocation === action.payload.yLocation - 1 &&
-        state.xLocation === action.payload.xLocation - 1
-      ) {
-        state.error = 'there is a robot already there!'
-      } else if (
-        action.payload.yLocation > 5 ||
-        action.payload.yLocation < 0 ||
-        action.payload.xLocation > 5 ||
-        action.payload.xLocation < 0
-      ) {
-        state.error =
-          'Invalid coordinates. Please enter valid coordinates: [0 to 5, 0 to 5]'
-      } else {
-        state.blockedSquares.push([
-          action.payload.yLocation - 1,
-          action.payload.xLocation - 1,
-        ])
-      }
-    },
+    placeWall: placeWallOnBoard,
     // TURN PIECE LEFT/RIGHT
     turnLeft(state) {
       if (!state.hasRobot) {
@@ -184,8 +88,8 @@ export const gameSlice = createSlice({
     // MOVE
     move(state) {
       // TODO: revisit this
-      // let coordinates: number[]
-      // let alreadyBlocked: boolean
+      let coordinates: number[]
+      let alreadyBlocked: boolean
       // if no robot, ignore command
       if (!state.hasRobot) {
         state.error = 'Please place a robot first!'
@@ -198,9 +102,10 @@ export const gameSlice = createSlice({
             console.log('north')
 
             if (state.yLocation === 4) {
-              const alreadyBlocked = checkIfArrayContainsArray(
+              coordinates = [0, state.xLocation]
+              alreadyBlocked = checkIfArrayContainsArray(
                 state.blockedSquares,
-                [0, state.xLocation]
+                coordinates
               )
               if (alreadyBlocked) {
                 state.error = 'Already blocked'
@@ -208,9 +113,10 @@ export const gameSlice = createSlice({
               }
               state.yLocation = 0
             } else {
-              const alreadyBlocked = checkIfArrayContainsArray(
+              coordinates = [state.yLocation + 1, state.xLocation]
+              alreadyBlocked = checkIfArrayContainsArray(
                 state.blockedSquares,
-                [state.yLocation + 1, state.xLocation]
+                coordinates
               )
               if (alreadyBlocked) {
                 state.error = 'Already blocked'
@@ -224,9 +130,10 @@ export const gameSlice = createSlice({
             console.log('WEST')
             {
               if (state.xLocation === 0) {
-                const alreadyBlocked = checkIfArrayContainsArray(
+                coordinates = [state.yLocation, 4]
+                alreadyBlocked = checkIfArrayContainsArray(
                   state.blockedSquares,
-                  [state.yLocation, 4]
+                  coordinates
                 )
                 if (alreadyBlocked) {
                   state.error = 'Already blocked'
@@ -234,9 +141,10 @@ export const gameSlice = createSlice({
                 }
                 state.xLocation = 4
               } else {
-                const alreadyBlocked = checkIfArrayContainsArray(
+                coordinates = [state.yLocation, state.xLocation - 1]
+                alreadyBlocked = checkIfArrayContainsArray(
                   state.blockedSquares,
-                  [state.yLocation, state.xLocation - 1]
+                  coordinates
                 )
                 if (alreadyBlocked) {
                   state.error = 'Already blocked'
@@ -249,9 +157,10 @@ export const gameSlice = createSlice({
           case 'SOUTH':
             console.log('south')
             if (state.yLocation === 0) {
-              const alreadyBlocked = checkIfArrayContainsArray(
+              coordinates = [4, state.xLocation]
+              alreadyBlocked = checkIfArrayContainsArray(
                 state.blockedSquares,
-                [4, state.xLocation]
+                coordinates
               )
               if (alreadyBlocked) {
                 state.error = 'Already blocked'
@@ -259,9 +168,10 @@ export const gameSlice = createSlice({
               }
               state.yLocation = 4
             } else {
-              const alreadyBlocked = checkIfArrayContainsArray(
+              coordinates = [state.yLocation - 1, state.xLocation]
+              alreadyBlocked = checkIfArrayContainsArray(
                 state.blockedSquares,
-                [state.yLocation - 1, state.xLocation]
+                coordinates
               )
               if (alreadyBlocked) {
                 state.error = 'Already blocked'
@@ -274,9 +184,10 @@ export const gameSlice = createSlice({
           case 'EAST':
             console.log('east')
             if (state.xLocation === 4) {
-              const alreadyBlocked = checkIfArrayContainsArray(
+              coordinates = [state.yLocation, 0]
+              alreadyBlocked = checkIfArrayContainsArray(
                 state.blockedSquares,
-                [state.yLocation, 0]
+                coordinates
               )
               if (alreadyBlocked) {
                 state.error = 'Already blocked'
@@ -284,9 +195,10 @@ export const gameSlice = createSlice({
               }
               state.xLocation = 0
             } else {
-              const alreadyBlocked = checkIfArrayContainsArray(
+              coordinates = [state.yLocation, state.xLocation + 1]
+              alreadyBlocked = checkIfArrayContainsArray(
                 state.blockedSquares,
-                [state.yLocation, state.xLocation + 1]
+                coordinates
               )
               if (alreadyBlocked) {
                 state.error = 'Already blocked'
@@ -294,7 +206,6 @@ export const gameSlice = createSlice({
               }
               state.xLocation++
             }
-
             break
         }
       } else return
@@ -303,19 +214,15 @@ export const gameSlice = createSlice({
     // TODO: REVISE THIS
     report(state) {
       if (!state.hasRobot) return
-      if (state.yLocation !== undefined && state.yLocation !== undefined) {
-        state.commandsLog.push([
-          state.xLocation + 1,
-          state.xLocation + 1,
-          state.direction,
-        ])
-      }
+      if (state.yLocation === undefined || state.xLocation === undefined) return
+
+      checkLastArray(state.commandsLog, [
+        state.xLocation + 1,
+        state.xLocation + 1,
+        state.direction,
+      ])
     },
     // TESTING COMMANDS
-    // SPAWN
-    spawnRobot(state) {
-      state.hasRobot = !state.hasRobot
-    },
     // RESET GAME:
     resetGame(state) {
       state.yLocation = undefined
@@ -340,7 +247,6 @@ export const {
   placeWall,
   move,
   report,
-  spawnRobot,
   resetGame,
   errorMessage,
 } = gameSlice.actions

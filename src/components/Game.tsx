@@ -28,7 +28,6 @@ function Game() {
   //   REPORT
   const handleReport = () => {
     dispatch(errorMessage(''))
-    console.log(`${yLocation},${xLocation},${direction}`)
     dispatch(report())
   }
 
@@ -104,7 +103,7 @@ function Game() {
 
             <Button text='MOVE' onClick={handleMove} disabled={!hasRobot} />
 
-            <Button text='REPORT' onClick={handleReport} disabled={!hasRobot} />
+            <Button text='REPORT' onClick={handleReport} />
 
             <Button
               text='TURN LEFT'
