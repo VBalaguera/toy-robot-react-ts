@@ -64,7 +64,18 @@ export const gameSlice = createSlice({
       ) {
         state.error =
           'Invalid coordinates. Please enter valid coordinates: [0 to 5, 0 to 5]'
-      } else {
+      } else if (!action.payload.direction) {
+        state.error = 'Please enter a direction'
+      }
+      // else if (
+      //   action.payload.direction !== 'WEST' ||
+      //   action.payload.direction !== 'SOUTH' ||
+      //   action.payload.direction !== 'EAST' ||
+      //   action.payload.direction !== 'NORTH'
+      // ) {
+      //   state.error = 'Please enter a valid direction'
+      // }
+      else {
         console.log(
           'yLocation:',
           action.payload.yLocation - 1,
@@ -172,6 +183,9 @@ export const gameSlice = createSlice({
     },
     // MOVE
     move(state) {
+      // TODO: revisit this
+      // let coordinates: number[]
+      // let alreadyBlocked: boolean
       // if no robot, ignore command
       if (!state.hasRobot) {
         state.error = 'Please place a robot first!'
@@ -179,105 +193,117 @@ export const gameSlice = createSlice({
         state.yLocation !== undefined &&
         state.xLocation !== undefined
       ) {
-        let coordinates: number[]
         switch (state.direction) {
           case 'NORTH':
             console.log('north')
-            {
-              coordinates = [state.yLocation + 1, state.xLocation]
+
+            if (state.yLocation === 4) {
               const alreadyBlocked = checkIfArrayContainsArray(
                 state.blockedSquares,
-                coordinates
+                [0, state.xLocation]
               )
-
               if (alreadyBlocked) {
                 state.error = 'Already blocked'
-              } else if (state.yLocation === 4) {
-                state.yLocation = 0
-              } else {
-                state.yLocation++
+                return
               }
+              state.yLocation = 0
+            } else {
+              const alreadyBlocked = checkIfArrayContainsArray(
+                state.blockedSquares,
+                [state.yLocation + 1, state.xLocation]
+              )
+              if (alreadyBlocked) {
+                state.error = 'Already blocked'
+                return
+              }
+              state.yLocation++
             }
+
             break
           case 'WEST':
             console.log('WEST')
             {
-              coordinates = [state.yLocation, state.xLocation - 1]
-              const alreadyBlocked = checkIfArrayContainsArray(
-                state.blockedSquares,
-                coordinates
-              )
-
-              if (alreadyBlocked) {
-                state.error = 'Already blocked'
-              } else if (state.xLocation === 0) {
+              if (state.xLocation === 0) {
+                const alreadyBlocked = checkIfArrayContainsArray(
+                  state.blockedSquares,
+                  [state.yLocation, 4]
+                )
+                if (alreadyBlocked) {
+                  state.error = 'Already blocked'
+                  return
+                }
                 state.xLocation = 4
               } else {
+                const alreadyBlocked = checkIfArrayContainsArray(
+                  state.blockedSquares,
+                  [state.yLocation, state.xLocation - 1]
+                )
+                if (alreadyBlocked) {
+                  state.error = 'Already blocked'
+                  return
+                }
                 state.xLocation--
               }
             }
             break
           case 'SOUTH':
             console.log('south')
-            {
-              coordinates = [state.yLocation - 1, state.xLocation]
+            if (state.yLocation === 0) {
               const alreadyBlocked = checkIfArrayContainsArray(
                 state.blockedSquares,
-                coordinates
+                [4, state.xLocation]
               )
               if (alreadyBlocked) {
                 state.error = 'Already blocked'
-              } else if (state.yLocation === 0) {
-                state.yLocation = 4
-              } else {
-                state.yLocation--
+                return
               }
+              state.yLocation = 4
+            } else {
+              const alreadyBlocked = checkIfArrayContainsArray(
+                state.blockedSquares,
+                [state.yLocation - 1, state.xLocation]
+              )
+              if (alreadyBlocked) {
+                state.error = 'Already blocked'
+                return
+              }
+              state.yLocation--
             }
+
             break
           case 'EAST':
             console.log('east')
-            {
-              coordinates = [state.yLocation, state.xLocation + 1]
+            if (state.xLocation === 4) {
               const alreadyBlocked = checkIfArrayContainsArray(
                 state.blockedSquares,
-                coordinates
+                [state.yLocation, 0]
               )
               if (alreadyBlocked) {
                 state.error = 'Already blocked'
-              } else if (state.xLocation === 4) {
-                state.xLocation = 0
-              } else {
-                state.xLocation++
+                return
               }
+              state.xLocation = 0
+            } else {
+              const alreadyBlocked = checkIfArrayContainsArray(
+                state.blockedSquares,
+                [state.yLocation, state.xLocation + 1]
+              )
+              if (alreadyBlocked) {
+                state.error = 'Already blocked'
+                return
+              }
+              state.xLocation++
             }
+
             break
         }
       } else return
-
-      // if wall in front of robot, ignore command
-      // get robot location and update it accordingly
-      // to the DIRECTION
-      // check if potential coordinates are available
-      // if so, move
-
-      // if robot reached edge of board AND there
-      // is no wall at the opposite of the board
-      // move robot to the opposite side of the board
-
-      // if DIR is NORTH: move y + 1
-      // if DIR is WEST: move x + 1
-      // if DIR is SOUTH: move y - 1
-      // if DIR is EAST: move x - 1
     },
     // REPORT
     // TODO: REVISE THIS
     report(state) {
-      if (!state.hasRobot) {
-        return
-      } else if (
-        state.yLocation !== undefined &&
-        state.yLocation !== undefined
-      ) {
+      if (!state.hasRobot) return
+      if (state.yLocation !== undefined && state.yLocation !== undefined) {
         state.commandsLog.push([
           state.xLocation + 1,
           state.xLocation + 1,

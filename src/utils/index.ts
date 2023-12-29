@@ -25,22 +25,22 @@ const allBlockedSquares = [
   [4, 3],
   [4, 4],
 ]
-function compareArrays(array1: Array<number>[], array2: Array<number>[]) {
-  if (array1.length === array2.length) return true
+function compareArrays(
+  array1: Array<number>[],
+  array2: Array<number>[]
+): boolean {
+  return array1.length === array2.length
 }
 
 function checkIfArrayContainsArray(
   array1: Array<number>[],
   array2: Array<number>
-) {
-  if (
-    array1.some(
-      (innerArray) =>
-        innerArray.length === array2.length &&
-        innerArray.every((value, index) => value === array2[index])
-    )
+): boolean {
+  return array1.some(
+    (innerArray) =>
+      innerArray.length === array2.length &&
+      innerArray.every((value, index) => value === array2[index])
   )
-    return true
 }
 
 export { compareArrays, allBlockedSquares, checkIfArrayContainsArray }

@@ -22,22 +22,8 @@ export default function Board({ yLocation, xLocation, children }: BoardProps) {
             <>
               <Square x={rowIndex} y={colIndex} />
             </>
-            // <>
-            //   {robotPosition.every(
-            //     (value, index) => value === [colIndex, rowIndex][index]
-            //   ) ? (
-            //     <Square x={colIndex} y={rowIndex} hasRobot={true}>
-            //       {children}
-            //     </Square>
-            //   ) : (
-            //     <Square x={colIndex} y={rowIndex} />
-            //   )}
-            // </>
           ))
         )}
-
-        {/* approach 2: place here the Piece */}
-        {/* x and y determine where it will be placed */}
         <div
           style={{
             width: '72px',
@@ -56,28 +42,15 @@ export default function Board({ yLocation, xLocation, children }: BoardProps) {
       </div>
       <div className='board-down'>
         {Array.from({ length: 1 }, () =>
-          Array.from({ length: 5 }, (_, colIndex) => (
-            <div>
-              {colIndex + 1}
-              {/* <Square>{colIndex + 1}</Square> */}
-            </div>
-          ))
+          Array.from({ length: 5 }, (_, colIndex) => <div>{colIndex + 1}</div>)
         )}
       </div>
       <div className='board-right'>
         {Array.from({ length: 5 }, (_, rowIndex) =>
-          Array.from({ length: 1 }, () => (
-            <div>
-              {rowIndex + 1}
-              {/* <Square>{rowIndex + 1}</Square> */}
-            </div>
-          ))
+          Array.from({ length: 1 }, () => <div>{rowIndex + 1}</div>)
         )}
       </div>
       <div className='board-empty'>
-        {/* <Square>
-          <span>TOY ROBOT GAME</span>
-        </Square> */}
         <div>TOY ROBOT GAME</div>
       </div>
     </div>

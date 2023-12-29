@@ -15,12 +15,12 @@ import Piece from './Piece'
 import Form from './Form'
 import CommandsLog from './CommandsLog'
 import Container from './ui/Container'
+import Command from './Command'
 
 function Game() {
-  const yLocation = useGameSelector((state) => state.game.yLocation)
-  const xLocation = useGameSelector((state) => state.game.xLocation)
-  const direction = useGameSelector((state) => state.game.direction)
-  const hasRobot = useGameSelector((state) => state.game.hasRobot)
+  const { yLocation, xLocation, direction, hasRobot, error } = useGameSelector(
+    (state) => state.game
+  )
 
   const dispatch = useGameDispatch()
 
@@ -73,6 +73,7 @@ function Game() {
           }}
         >
           <h1>Toy robot game</h1>
+          {error && <Command status='error'>{error}</Command>}
 
           <Board yLocation={yLocation} xLocation={xLocation}>
             <Piece direction={direction} />
