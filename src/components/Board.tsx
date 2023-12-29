@@ -25,16 +25,13 @@ export default function Board({ yLocation, xLocation, children }: BoardProps) {
           ))
         )}
         <div
+          className='board-piece'
           style={{
-            width: '72px',
-            height: '72px',
-            position: 'absolute',
+            // using yLocation and xLocation
+            // to position the piece
+            // adjusting position by inverting both axis
             top: `calc(0px + 72px * ${xLocation})`,
             left: `calc(0px + 72px * ${yLocation})`,
-            // adjusting position by inverting both axis
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
           }}
         >
           {xLocation !== undefined && yLocation !== undefined && children}
@@ -51,6 +48,7 @@ export default function Board({ yLocation, xLocation, children }: BoardProps) {
         )}
       </div>
       <div className='board-empty'>
+        {/* TODO: improve this styling */}
         <div>TOY ROBOT GAME</div>
       </div>
     </div>

@@ -52,25 +52,9 @@ function Game() {
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignContent: 'center',
-        justifyContent: 'center',
-        width: '100%',
-      }}
-    >
+    <div className='game'>
       <Container>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '10px',
-            width: '100%',
-          }}
-        >
+        <div className='game-container'>
           <h1>Toy robot game</h1>
           {error && <Command status='error'>{error}</Command>}
 
@@ -79,26 +63,8 @@ function Game() {
           </Board>
         </div>
 
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '20px',
-            width: '100%',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '10px',
-              width: '50%',
-              height: 'auto',
-            }}
-          >
+        <div className='game-controls'>
+          <div className='game-controls-inputs'>
             <Form />
 
             <Button text='MOVE' onClick={handleMove} disabled={!hasRobot} />
@@ -120,30 +86,10 @@ function Game() {
             <Button text='reset game' onClick={handleResetGame} />
           </div>
 
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-
-              width: '50%',
-              height: '100%',
-            }}
-          >
+          <div className='game-controls-logs'>
             <CommandsLog />
           </div>
         </div>
-
-        {/* <Message text='error message test' status='error' />
-        <Message text='message test' />
-
-        <Command text='command error test' status='error' />
-        <Command text='command test' /> */}
-
-        {/* <Log>
-          <Command text='command error test' status='error' />
-          <Command text='command test' />
-        </Log> */}
       </Container>
     </div>
   )

@@ -4,7 +4,6 @@ import Command from './Command'
 
 export default function CommandsLog() {
   const commandsLog = useGameSelector((state) => state.game.commandsLog)
-  console.log(commandsLog)
   return (
     <div className='commands-log'>
       {commandsLog.map((item, i) => (

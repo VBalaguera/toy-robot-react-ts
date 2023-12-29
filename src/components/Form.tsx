@@ -1,16 +1,12 @@
 import { useGameDispatch, useGameSelector } from '../store/hooks'
-import {
-  turnLeft,
-  turnRight,
-  placeRobot,
-  placeWall,
-  move,
-  report,
-  resetGame,
-  errorMessage,
-} from '../store/game-slice'
+import { errorMessage } from '../store/game-slice'
 
-import { allBlockedSquares, compareArrays } from '../utils'
+import {
+  allBlockedSquares,
+  compareArrays,
+  processInput,
+  submitForm,
+} from '../utils'
 
 import Input from './Input'
 import Button from './Button'
@@ -42,125 +38,16 @@ export default function Form() {
     dispatch(errorMessage(''))
     const formData = new FormData(event.currentTarget)
     const data = Object.fromEntries(formData)
-    const processedInput = String(data.command).toUpperCase()
-    const commands = processedInput.split(/[,\s]+/)
+    const commands = processInput(data.command)
 
-    if (!hasRobot) {
-      switch (commands[0]) {
-        case 'PLACE_ROBOT':
-          // TODO: additional checks for command length?
+    submitForm(dispatch, hasRobot, commands)
 
-          dispatch(
-            placeRobot({
-              yLocation: +commands[1],
-              xLocation: +commands[2],
-              direction: commands[3],
-              hasRobot: true,
-            })
-          )
-
-          break
-        // PLACE_WALL
-        case 'PLACE_WALL':
-          // TODO: additional checks for command length
-          dispatch(
-            placeWall({
-              yLocation: +commands[1],
-              xLocation: +commands[2],
-            })
-          )
-          break
-        // TURN, REPORT, MOVE
-        case 'LEFT':
-        case 'RIGHT':
-        case 'REPORT':
-        case 'MOVE':
-          {
-            dispatch(
-              errorMessage(
-                'Command not supported yet. You need to place a robot first!'
-              )
-            )
-          }
-          break
-        // EXPERIMENTAL
-        case 'RESET':
-          dispatch(resetGame())
-          break
-        default:
-          dispatch(errorMessage('Command not recognized'))
-      }
-    } else {
-      switch (commands[0]) {
-        // PLACE_ROBOT
-        case 'PLACE_ROBOT':
-          dispatch(
-            placeRobot({
-              yLocation: +commands[1],
-              xLocation: +commands[2],
-              direction: commands[3],
-              hasRobot: true,
-            })
-          )
-          break
-        //   PLACE_WALL
-        case 'PLACE_WALL':
-          dispatch(
-            placeWall({
-              yLocation: +commands[1],
-              xLocation: +commands[2],
-            })
-          )
-          break
-        // TURN
-        case 'LEFT':
-          dispatch(turnLeft())
-          break
-        case 'RIGHT':
-          dispatch(turnRight())
-          break
-        //   REPORT
-        case 'REPORT':
-          dispatch(report())
-          break
-        // MOVE
-        case 'MOVE':
-          dispatch(move())
-          break
-        // EXPERIMENTAL
-        case 'RESET':
-          dispatch(resetGame())
-          break
-        default:
-          dispatch(errorMessage('Command not recognized'))
-      }
-    }
     setCommand('')
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        height: '100%',
-      }}
-    >
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '10px',
-          width: '100%',
-          height: '100%',
-        }}
-      >
+    <div className='form-container'>
+      <form onSubmit={handleSubmit} className='form'>
         <Input
           name='command'
           id='command'

@@ -1,4 +1,15 @@
-import { Command } from '../store/game-slice'
+import { Dispatch } from '@reduxjs/toolkit'
+import {
+  Command,
+  errorMessage,
+  move,
+  placeRobot,
+  placeWall,
+  report,
+  resetGame,
+  turnLeft,
+  turnRight,
+} from '../store/game-slice'
 
 // all board's squares' positions
 const allBlockedSquares = [
@@ -69,9 +80,113 @@ function checkLastArray(
   return arrayOfArrays
 }
 
+function processInput(text: FormDataEntryValue): string[] {
+  const processedInput = String(text).toUpperCase()
+  const commands = processedInput.split(/[,\s]+/)
+  return commands
+}
+
+// submit game form
+function submitForm(
+  dispatch: Dispatch,
+  hasRobot: boolean,
+  commands: string[]
+): void {
+  if (!hasRobot) {
+    switch (commands[0]) {
+      case 'PLACE_ROBOT':
+        // TODO: additional checks for command length?
+        dispatch(
+          placeRobot({
+            yLocation: +commands[1],
+            xLocation: +commands[2],
+            direction: commands[3],
+            hasRobot: true,
+          })
+        )
+        break
+      // PLACE_WALL
+      case 'PLACE_WALL':
+        // TODO: additional checks for command length
+        dispatch(
+          placeWall({
+            yLocation: +commands[1],
+            xLocation: +commands[2],
+          })
+        )
+        break
+      // TURN, REPORT, MOVE
+      case 'LEFT':
+      case 'RIGHT':
+      case 'REPORT':
+      case 'MOVE':
+        {
+          dispatch(
+            errorMessage(
+              'Command not supported yet. You need to place a robot first!'
+            )
+          )
+        }
+        break
+      // EXPERIMENTAL
+      case 'RESET':
+        dispatch(resetGame())
+        break
+      default:
+        dispatch(errorMessage('Command not recognized'))
+    }
+  } else {
+    switch (commands[0]) {
+      // PLACE_ROBOT
+      case 'PLACE_ROBOT':
+        dispatch(
+          placeRobot({
+            yLocation: +commands[1],
+            xLocation: +commands[2],
+            direction: commands[3],
+            hasRobot: true,
+          })
+        )
+        break
+      //   PLACE_WALL
+      case 'PLACE_WALL':
+        dispatch(
+          placeWall({
+            yLocation: +commands[1],
+            xLocation: +commands[2],
+          })
+        )
+        break
+      // TURN
+      case 'LEFT':
+        dispatch(turnLeft())
+        break
+      case 'RIGHT':
+        dispatch(turnRight())
+        break
+      //   REPORT
+      case 'REPORT':
+        dispatch(report())
+        break
+      // MOVE
+      case 'MOVE':
+        dispatch(move())
+        break
+      // EXPERIMENTAL
+      case 'RESET':
+        dispatch(resetGame())
+        break
+      default:
+        dispatch(errorMessage('Command not recognized'))
+    }
+  }
+}
+
 export {
   compareArrays,
   allBlockedSquares,
   checkIfArrayContainsArray,
   checkLastArray,
+  processInput,
+  submitForm,
 }
