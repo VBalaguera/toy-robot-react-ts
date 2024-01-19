@@ -9,7 +9,7 @@ type InputProps = {
 export default function Input({ id, ...props }: InputProps) {
   return (
     <div className='input'>
-      <input id={id} {...props} />
+      <input className='input' id={id} {...props} />
     </div>
   )
 }

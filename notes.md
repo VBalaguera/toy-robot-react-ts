@@ -24,14 +24,18 @@ initialState = {
     hasRobot: false
     coordinates: []
     error: ''
+    Log: []
 }
 
-Since you CANNOT remove walls, the only coordinates that will come and go will be the ones
+Since you CANNOT remove walls, the only coordinates that will come and go to/from BlockedSquares will be the ones
 for PLACE_ROBOT action
 
 And it would be fun if given that you can fill the entire board with walls before
-you place the robot, after checking if the entire board is finally full of walls (which is a simple boolean in a comparisson between a, pseudocode here, EntireBoardCoordinates and BlockedCoordinates AND hasRobot as false), then giving a message saying something like:
-"the robot wanted to play today, but you didn't allowed it to..."
+you place the robot, after checking if the entire board is finally full of walls
+(which is a simple boolean in a comparisson between a, pseudocode here,
+EntireBoardCoordinates and BlockedCoordinates AND hasRobot as false),
+then giving a message saying something like:
+"the robot wanted to play today, but you didn't allowed it to!"
 
 This, of course, is another error message.
  -->

@@ -6,7 +6,7 @@
 import robot from '../assets/robot-svgrepo-com.svg'
 
 type PieceProps = {
-  direction: string
+  direction?: string
 }
 
 export default function Piece({ direction }: PieceProps) {

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
 
-:root {
+#root {
   font-family: 'Roboto', sans-serif, Helvetica, Arial, sans-serif;
 
   color-scheme: dark;
@@ -11,6 +11,14 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100% !important;
+  width: 100% !important;
 }
 
 a {
@@ -25,7 +33,10 @@ a:hover {
 
 body {
   margin: 0;
-
+  padding: 0;
+  box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
 }
 
 ol,
@@ -34,8 +45,10 @@ li {
   list-style: none;
 }
 
+h1,
 p {
   margin: 0;
+  padding: 0;
 }
 
 /* Board */
@@ -60,6 +73,16 @@ p {
   position: relative;
 
   transform: rotate(270deg)
+}
+
+.board-piece {
+  width: 72px;
+  height: 72px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+
+  justify-content: center;
 }
 
 
@@ -92,7 +115,7 @@ p {
 
 .board-down {
   grid-area: 6 / 1 / 7 / 6;
-  background-color: red;
+  background-color: orange;
   display: flex;
 }
 
@@ -104,6 +127,17 @@ p {
   align-items: center;
   justify-content: center;
   font-weight: bold;
+}
+
+/* Container */
+
+.container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 1rem;
 }
 
 /* alt */
@@ -144,6 +178,7 @@ p {
   border: 1px solid green;
   padding: .5rem;
   border-radius: 2px;
+  width: 100%;
 }
 
 .button:hover {
@@ -153,19 +188,148 @@ p {
   border: 1px solid black;
 }
 
+.button:disabled {
+  cursor: not-allowed;
+}
+
 /* Command */
 
-.command,
-.message {
+.text {
+  color: green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+
+
+.text-command {
   color: blue;
   font-weight: bolder;
 }
 
-.error {
+.text-error {
   color: crimson;
+  font-weight: bolder;
 }
 
+.text-title {
+  font-size: 2rem;
+  font-weight: bolder;
+  color: white;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Form */
+/* TODO: redundant? */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+/* Game */
+
+.game {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 520px;
+
+
+}
+
+.game-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 520px;
+  height: 100%;
+}
+
+.game-controls-inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  height: 100%;
+  width: 27%;
+
+}
+
+.game-controls-instructions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  gap: 10px;
+  height: 100%;
+  width: 73%;
+
+  border: 1px solid green;
+  border-radius: 2px;
+
+  box-sizing: border-box;
+  padding: 1rem;
+
+  overflow: scroll;
+}
+
+
+
+
+/* CommandsLog */
+
+.commands-log {
+  display: flex;
+  border: 1px solid green;
+  border-radius: 2px;
+  width: 100%;
+  height: 100%;
+  padding: .5rem;
+}
+
+
+
 /* Input */
+
+.input {
+  width: 100%;
+  display: flex;
+}
+
 .input input {
   color: green;
   font-weight: bold;
@@ -196,19 +360,19 @@ p {
   height: 54px;
 }
 
-/* TODO: revise */
-.north {
-  transform: rotate(90deg)
+/* TODO: revise transitions */
+.NORTH {
+  transform: rotate(90deg);
 }
 
-.east {
+.EAST {
   transform: rotate(180deg);
 }
 
-.south {
+.SOUTH {
   transform: rotate(270deg);
 }
 
-.west {
+.WEST {
   transform: rotate(0deg);
 }

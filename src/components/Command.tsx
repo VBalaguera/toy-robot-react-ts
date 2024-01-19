@@ -1,13 +1,17 @@
 // displays individual commands
 // styles vary depending on being an erroneous command or not
 
+import { type ReactNode } from 'react'
+
 type CommandProps = {
-  text: string
+  children: ReactNode
   status?: string
 }
 
-export default function Command({ text, status }: CommandProps) {
+export default function Command({ status, children }: CommandProps) {
   return (
-    <li className={`command ${status === 'error' ? 'error' : ''}`}>{text}</li>
+    <li className={`command ${status === 'error' ? 'error' : ''}`}>
+      {children}
+    </li>
   )
 }
