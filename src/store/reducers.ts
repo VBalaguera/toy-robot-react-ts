@@ -1,6 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { Game } from '../store/game-slice'
-import { checkIfArrayContainsArray, checkLastArray } from '../utils'
+import { checkIfArrayContainsArray } from '../utils'
+// checkLastArray
 
 // PLACE_ROBOT:
 function placeRobotOnBoard(
@@ -170,7 +171,6 @@ function moveRobot(state: Game) {
           }
           state.yLocation++
         }
-
         break
       case 'WEST':
         console.log('WEST')
@@ -261,11 +261,15 @@ function reportRobot(state: Game) {
   if (!state.hasRobot) return
   if (state.yLocation === undefined || state.xLocation === undefined) return
 
-  checkLastArray(state.commandsLog, [
-    state.xLocation + 1,
-    state.xLocation + 1,
-    state.direction,
-  ])
+  state.commandsLog = [
+    [state.yLocation + 1, state.xLocation + 1, state.direction],
+  ]
+
+  // checkLastArray(state.commandsLog, [
+  //   state.yLocation + 1,
+  //   state.xLocation + 1,
+  //   state.direction,
+  // ])
 }
 // ADDITIONAL COMMANDS
 // RESET GAME:

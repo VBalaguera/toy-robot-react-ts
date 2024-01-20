@@ -8,9 +8,11 @@ import {
   report,
 } from '../store/game-slice'
 import Button from './Button'
+import Command from './Command'
 
 export default function Controls() {
-  const { hasRobot } = useGameSelector((state) => state.game)
+  const { hasRobot, yLocation, xLocation, direction, commandsLog } =
+    useGameSelector((state) => state.game)
 
   const dispatch = useGameDispatch()
   //   COMMANDS
@@ -18,6 +20,7 @@ export default function Controls() {
   const handleReport = () => {
     dispatch(errorMessage(''))
     dispatch(report())
+    console.log(yLocation, xLocation, direction)
   }
 
   //   LEFT
@@ -56,6 +59,10 @@ export default function Controls() {
         onClick={handleMovePieceRight}
         disabled={!hasRobot}
       />
+
+      <Command>
+        {commandsLog[0]} {commandsLog[1]} {commandsLog[2]}
+      </Command>
 
       {/* for testing */}
       <Button text='reset game' onClick={handleResetGame} />

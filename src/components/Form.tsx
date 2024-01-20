@@ -51,6 +51,7 @@ export default function Form() {
         <Input
           name='command'
           id='command'
+          data-testid='commandInputElement'
           type='text'
           value={command}
           onChange={(e) => setCommand(e.target.value)}
