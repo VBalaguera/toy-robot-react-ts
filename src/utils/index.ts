@@ -98,8 +98,8 @@ function submitForm(
         // TODO: additional checks for command length?
         dispatch(
           placeRobot({
-            yLocation: +commands[1],
-            xLocation: +commands[2],
+            xLocation: +commands[1],
+            yLocation: +commands[2],
             direction: commands[3],
             hasRobot: true,
           })

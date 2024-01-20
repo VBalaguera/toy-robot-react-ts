@@ -97,24 +97,13 @@ test('1,4,EAST TEST', () => {
   enterInput(commandInputElement, 'MOVE')
   clickSubmitButton(submitButtonElement)
 
-  // eight instruction
+  // eigtht instruction
   enterInput(commandInputElement, 'MOVE')
   clickSubmitButton(submitButtonElement)
 
   // ninth instruction
   enterInput(commandInputElement, 'REPORT')
   clickSubmitButton(submitButtonElement)
-
-  /*
-  PLACE_WALL 3,5
-MOVE
-MOVE
-RIGHT
-MOVE
-MOVE
-MOVE
-REPORT
-  */
 
   // this checks the outcome of the first two commands
   // expect(store.getState().game.hasRobot).toBe(true)
@@ -124,9 +113,59 @@ REPORT
   // expect(store.getState().game.blockedSquares).toStrictEqual([[2, 4]])
 
   // final values
-  // adjusting values
-  // NOTE: these are the given values
-  expect(store.getState().game.yLocation).toBe(1)
-  expect(store.getState().game.xLocation).toBe(4)
+  expect(store.getState().game.xLocation).toBe(0)
+  expect(store.getState().game.yLocation).toBe(3)
   expect(store.getState().game.direction).toBe('EAST')
+  expect(store.getState().game.report).toStrictEqual([1, 4, 'EAST'])
+})
+
+test('3,2,EAST TEST', () => {
+  render(
+    <Provider store={store}>
+      <Form />
+    </Provider>
+  )
+
+  const commandInputElement = screen.getByTestId('commandInputElement')
+  const submitButtonElement = screen.getByRole('button')
+  expect(commandInputElement).toBeInTheDocument()
+  expect(submitButtonElement).toBeInTheDocument()
+
+  // typing first instruction
+  enterInput(commandInputElement, 'PLACE_ROBOT 2,2,WEST')
+  clickSubmitButton(submitButtonElement)
+
+  // second instruction
+  enterInput(commandInputElement, 'PLACE_WALL 1,1')
+  clickSubmitButton(submitButtonElement)
+
+  // third instruction
+  enterInput(commandInputElement, 'PLACE_WALL 2,2')
+  clickSubmitButton(submitButtonElement)
+
+  // fourth instruction
+  enterInput(commandInputElement, 'PLACE_WALL 1,3')
+  clickSubmitButton(submitButtonElement)
+
+  // fifth instruction
+  enterInput(commandInputElement, 'LEFT')
+  clickSubmitButton(submitButtonElement)
+
+  // sixth instruction
+  enterInput(commandInputElement, 'LEFT')
+  clickSubmitButton(submitButtonElement)
+
+  // seventh instruction
+  enterInput(commandInputElement, 'MOVE')
+  clickSubmitButton(submitButtonElement)
+
+  // eigtht instruction
+  enterInput(commandInputElement, 'REPORT')
+  clickSubmitButton(submitButtonElement)
+
+  // final values
+  expect(store.getState().game.xLocation).toBe(2)
+  expect(store.getState().game.yLocation).toBe(1)
+  expect(store.getState().game.direction).toBe('EAST')
+  expect(store.getState().game.report).toStrictEqual([3, 2, 'EAST'])
 })

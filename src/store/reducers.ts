@@ -7,15 +7,15 @@ import { checkIfArrayContainsArray } from '../utils'
 function placeRobotOnBoard(
   state: Game,
   action: PayloadAction<{
-    yLocation: number
     xLocation: number
+    yLocation: number
     direction: string
     hasRobot?: boolean
   }>
 ) {
   const coordinates = [
-    action.payload.yLocation - 1,
     action.payload.xLocation - 1,
+    action.payload.yLocation - 1,
   ]
   const alreadyBlocked = checkIfArrayContainsArray(
     state.blockedSquares,
@@ -24,10 +24,10 @@ function placeRobotOnBoard(
   if (alreadyBlocked) {
     state.error = 'Already blocked'
   } else if (
-    action.payload.yLocation > 5 ||
-    action.payload.yLocation < 0 ||
     action.payload.xLocation > 5 ||
-    action.payload.xLocation < 0
+    action.payload.xLocation < 0 ||
+    action.payload.yLocation > 5 ||
+    action.payload.yLocation < 0
   ) {
     state.error =
       'Invalid coordinates. Please enter valid coordinates: [0 to 5, 0 to 5]'
@@ -41,8 +41,8 @@ function placeRobotOnBoard(
   ) {
     return {
       ...state,
-      yLocation: action.payload.yLocation - 1,
       xLocation: action.payload.xLocation - 1,
+      yLocation: action.payload.yLocation - 1,
       direction: action.payload.direction,
       hasRobot: true,
     }
@@ -149,7 +149,7 @@ function moveRobot(state: Game) {
         console.log('north')
 
         if (state.yLocation === 4) {
-          coordinates = [0, state.xLocation]
+          coordinates = [state.xLocation, 0]
           alreadyBlocked = checkIfArrayContainsArray(
             state.blockedSquares,
             coordinates
@@ -160,7 +160,7 @@ function moveRobot(state: Game) {
           }
           state.yLocation = 0
         } else {
-          coordinates = [state.yLocation + 1, state.xLocation]
+          coordinates = [state.xLocation, state.yLocation + 1]
           alreadyBlocked = checkIfArrayContainsArray(
             state.blockedSquares,
             coordinates
@@ -176,7 +176,7 @@ function moveRobot(state: Game) {
         console.log('WEST')
         {
           if (state.xLocation === 0) {
-            coordinates = [state.yLocation, 4]
+            coordinates = [4, state.yLocation]
             alreadyBlocked = checkIfArrayContainsArray(
               state.blockedSquares,
               coordinates
@@ -187,7 +187,7 @@ function moveRobot(state: Game) {
             }
             state.xLocation = 4
           } else {
-            coordinates = [state.yLocation, state.xLocation - 1]
+            coordinates = [state.xLocation - 1, state.yLocation]
             alreadyBlocked = checkIfArrayContainsArray(
               state.blockedSquares,
               coordinates
@@ -203,7 +203,7 @@ function moveRobot(state: Game) {
       case 'SOUTH':
         console.log('south')
         if (state.yLocation === 0) {
-          coordinates = [4, state.xLocation]
+          coordinates = [state.xLocation, 4]
           alreadyBlocked = checkIfArrayContainsArray(
             state.blockedSquares,
             coordinates
@@ -214,7 +214,7 @@ function moveRobot(state: Game) {
           }
           state.yLocation = 4
         } else {
-          coordinates = [state.yLocation - 1, state.xLocation]
+          coordinates = [state.xLocation, state.yLocation - 1]
           alreadyBlocked = checkIfArrayContainsArray(
             state.blockedSquares,
             coordinates
@@ -230,7 +230,7 @@ function moveRobot(state: Game) {
       case 'EAST':
         console.log('east')
         if (state.xLocation === 4) {
-          coordinates = [state.yLocation, 0]
+          coordinates = [0, state.yLocation]
           alreadyBlocked = checkIfArrayContainsArray(
             state.blockedSquares,
             coordinates
@@ -241,7 +241,7 @@ function moveRobot(state: Game) {
           }
           state.xLocation = 0
         } else {
-          coordinates = [state.yLocation, state.xLocation + 1]
+          coordinates = [state.xLocation + 1, state.yLocation]
           alreadyBlocked = checkIfArrayContainsArray(
             state.blockedSquares,
             coordinates
@@ -261,9 +261,11 @@ function reportRobot(state: Game) {
   if (!state.hasRobot) return
   if (state.yLocation === undefined || state.xLocation === undefined) return
 
-  state.commandsLog = [
-    [state.yLocation + 1, state.xLocation + 1, state.direction],
-  ]
+  state.report = [state.xLocation + 1, state.yLocation + 1, state.direction]
+
+  // state.commandsLog = [
+  //   [state.xLocation + 1, state.yLocation + 1, state.direction],
+  // ]
 
   // checkLastArray(state.commandsLog, [
   //   state.yLocation + 1,

@@ -14,18 +14,24 @@ import {
 export type BlockedSquare = [y: number, x: number]
 
 export type Command = [
-  y: number | undefined,
   x: number | undefined,
+  y: number | undefined,
+  direction: string | undefined
+]
+export type Report = [
+  x: number | undefined,
+  y: number | undefined,
   direction: string | undefined
 ]
 
 export type Game = {
-  yLocation?: number
   xLocation?: number
+  yLocation?: number
   direction?: string
   hasRobot: boolean
   blockedSquares: BlockedSquare[]
   error?: string
+  report: Report
   // TODO: return to commandsLog
   // in the near future
   commandsLog: Command[]
@@ -38,6 +44,7 @@ const initialState: Game = {
   hasRobot: false,
   error: undefined,
   blockedSquares: [],
+  report: [undefined, undefined, undefined],
   commandsLog: [],
 }
 
