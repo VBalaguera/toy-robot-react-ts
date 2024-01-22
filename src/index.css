@@ -95,14 +95,11 @@ p {
 }
 
 
-/* TODO: revisit this */
 .board-right {
   grid-area: 1 / 6 / 6 / 7;
   display: flex;
   flex-direction: column;
   background-color: orange;
-
-  /* TODO:  */
   transform: rotate(180deg)
 }
 
@@ -243,7 +240,6 @@ p {
 }
 
 /* Form */
-/* TODO: redundant? */
 .form-container {
   display: flex;
   flex-direction: column;
@@ -360,13 +356,14 @@ p {
 .input {
   width: 100%;
   display: flex;
+
 }
 
 .input input {
   color: green;
   font-weight: bold;
   background-color: transparent;
-  border: 1px solid white;
+  border: 1px solid green;
   padding: .5rem;
   border-radius: 2px;
 }
@@ -392,7 +389,6 @@ p {
   height: 54px;
 }
 
-/* TODO: revise transitions */
 .NORTH {
   transform: rotate(90deg);
 }
@@ -458,7 +454,9 @@ p {
   .button,
   .game-controls-instructions,
   .game-report,
-  .text-error {
+  .text-error,
+  .input,
+  .input::placeholder {
     font-size: 12px;
   }
 }
@@ -494,7 +492,9 @@ p {
   .button,
   .game-controls-instructions,
   .game-report,
-  .text-error {
+  .text-error,
+  .input,
+  .input::placeholder {
     font-size: 10px;
   }
 

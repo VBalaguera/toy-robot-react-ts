@@ -137,7 +137,6 @@ function turnRobotRight(state: Game) {
 
 // MOVE
 function moveRobot(state: Game) {
-  // TODO: revisit this
   let coordinates: number[]
   let alreadyBlocked: boolean
   // if no robot, ignore command

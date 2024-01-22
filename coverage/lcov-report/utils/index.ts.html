@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.13% </span>
+                <span class="strong">50.9% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>25/43</span>
+                <span class='fraction'>28/55</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">45.83% </span>
+                <span class="strong">43.75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>11/24</span>
+                <span class='fraction'>14/32</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">59.52% </span>
+                <span class="strong">51.85% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>25/42</span>
+                <span class='fraction'>28/54</span>
             </div>
         
             
@@ -255,7 +255,20 @@
 <a name='L190'></a><a href='#L190'>190</a>
 <a name='L191'></a><a href='#L191'>191</a>
 <a name='L192'></a><a href='#L192'>192</a>
-<a name='L193'></a><a href='#L193'>193</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -352,6 +365,9 @@
 <span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -364,6 +380,9 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -395,6 +414,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -406,6 +428,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -544,7 +570,10 @@ function submitForm(
   if (!hasRobot) {
     switch (commands[0]) {
       case 'PLACE_ROBOT':
-        // TODO: additional checks for command length?
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (commands.length !== 4) {
+<span class="cstat-no" title="statement not covered" >          dispatch(errorMessage('Please write a valid command'))</span>
+<span class="cstat-no" title="statement not covered" >          return</span>
+        }
         dispatch(
           placeRobot({
             xLocation: +commands[1],
@@ -556,7 +585,10 @@ function submitForm(
         break
       // PLACE_WALL
 <span class="branch-1 cbranch-no" title="branch not covered" >      case 'PLACE_WALL':</span>
-        // TODO: additional checks for command length
+<span class="cstat-no" title="statement not covered" >        if (commands.length !== 3) {</span>
+<span class="cstat-no" title="statement not covered" >          dispatch(errorMessage('Please write a valid command'))</span>
+<span class="cstat-no" title="statement not covered" >          return</span>
+        }
 <span class="cstat-no" title="statement not covered" >        dispatch(</span>
           placeWall({
             yLocation: +commands[1],
@@ -586,8 +618,11 @@ function submitForm(
     }
   } else {
     switch (commands[0]) {
-      // PLACE_ROBOT
       case 'PLACE_ROBOT':
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (commands.length !== 4) {
+<span class="cstat-no" title="statement not covered" >          dispatch(errorMessage('Please write a valid command'))</span>
+<span class="cstat-no" title="statement not covered" >          return</span>
+        }
         dispatch(
           placeRobot({
             yLocation: +commands[1],
@@ -599,6 +634,10 @@ function submitForm(
         break
       //   PLACE_WALL
       case 'PLACE_WALL':
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (commands.length !== 3) {
+<span class="cstat-no" title="statement not covered" >          dispatch(errorMessage('Please write a valid command'))</span>
+<span class="cstat-no" title="statement not covered" >          return</span>
+        }
         dispatch(
           placeWall({
             yLocation: +commands[1],
@@ -646,7 +685,7 @@ export {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-22T08:21:10.512Z
+                at 2024-01-22T10:24:31.946Z
             </div>
         <script src="../prettify.js"></script>
         <script>

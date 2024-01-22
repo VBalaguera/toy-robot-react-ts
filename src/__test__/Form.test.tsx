@@ -91,7 +91,7 @@ REPORT
 test('3,2,EAST TEST', () => {
   render(
     <Provider store={store}>
-      <Form />
+      <GameForm />
     </Provider>
   )
 
