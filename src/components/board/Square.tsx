@@ -21,7 +21,7 @@ export default function Square({ x, y, children }: SquareProps) {
 
   return (
     <span className={`square ${blocked ? 'blocked' : ''}`}>
-      <span>row: {x + 1};</span> <span>col: {y + 1}.</span>
+      {/* <span>row: {x + 1};</span> <span>col: {y + 1}.</span> */}
       {children}
     </span>
   )

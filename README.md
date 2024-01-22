@@ -1,20 +1,54 @@
-# Toy robot game
+# Toy robot game
 
 DESCRIPTION: This is a classic coding challenge that uses vite, react, typescript, jest and react-testing.
 
-## Project Folder Structure
+## Project Folder Structure
 
 ```
 app/
   node_modules/
   src/
     __test__/
+      App.test.tsx
       FormOne.test.tsx
       FormTwo.test.tsx
-    assets/
     components/
+      board/
+        Board.tsx
+        Piece.tsx
+        Square.tsx
+      game/
+        GameBoard/
+          GameBoard.tsx
+        GameControls/
+          GameControls.tsx
+          GameControlsCommands.tsx
+          GameControlsInput.tsx
+          GameControlsPanel.tsx
+        GameUI/
+          GameError.tsx
+          GameHeading.tsx
+          GameInstructions.tsx
+          GameReport.tsx
+        Game.tsx
+      ui/
+        Button.tsx
+        Command.tsx
+        CommandsLog.tsx
+        Container.tsx
+        Input.tsx
+        Instruction.tsx
+        Log.tsx
+        Select.tsx
+        Text.tsx
     store/
+      game-slice.ts
+      hooks.ts
+      reducers.ts
+      store.ts
     utils/
+      index.ts
+      test-utils.ts
     App.tsx
     index.css
     main.tsx
@@ -35,11 +69,11 @@ app/
   vite.config.ts
 ```
 
-## Available Scripts
+## Available Scripts
 
 In the app directory, you can run these scripts:
 
-### npm run dev
+### npm run dev
 
 Runs app in development mode.
 Access [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -76,4 +110,4 @@ For local use, not meant as a production server.
 
 ## Image links
 
-[Robot](https://www.svgrepo.com/svg/21117/robot)
+[Robot](https://www.svgrepo.com/svg/21117/robot).
