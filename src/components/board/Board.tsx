@@ -16,8 +16,6 @@ export default function Board({ yLocation, xLocation, children }: BoardProps) {
 
   return (
     <div className='board-container'>
-      {xLocation}
-      {yLocation}
       <div className='board'>
         {/*  */}
         {Array.from({ length: rows }, (_, rowIndex) =>

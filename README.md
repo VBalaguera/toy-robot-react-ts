@@ -2,6 +2,8 @@
 
 DESCRIPTION: This is a classic coding challenge that uses vite, react, typescript, jest and react-testing.
 
+LIVE version available [here](https://toy-robot-react-ts.vercel.app/).
+
 ## Project Folder Structure
 
 ```
@@ -107,6 +109,32 @@ Thus, running local tests using Jest and react-testing. Generates `coverage` fol
 
 Boots up a local static web server that serves the files from `dist`at [http://localhost:8080](http://localhost:8080).
 For local use, not meant as a production server.
+
+## How to play this game
+
+Welcome to the toy robot game!
+
+In this game, you can place a robot anywhere at this 5x5 board. To do so, use the command **PLACE_ROBOT ROW,COL,FACING**. **ROW and COL** reference the coordinates in the y and x axis respectively (only using numbers from 1 to 5 for each). Any While **FACING** dictates the robot's direction. There are 4 available directions: **NORTH, SOUTH, EAST, and WEST**.
+
+Example:
+
+```
+PLACE_ROBOT 1,1,EAST
+```
+
+You can also place walls on this board using the command **PLACE_WALL ROW,COL**. To place a wall, use valid numeric coordinates. If the target location is occupied by a robot or another wall, this command will be ignored. **NOTE**: you can place as many walls as you want, but leave the robot at least a few free spaces to play with...
+
+Example:
+
+```
+PLACE_WALL 1,1
+```
+
+Typing **REPORT**: prints out the current location and facing direction of the robot.
+
+Typing **MOVE**: command moves the robot one space forward in the direction it's currently facing. location and facing direction of the robot. Unless there's a wall in front of it!
+
+Typing **LEFT/RIGHT**: To place a wall, use valid numeric coordinates. If the target location is occupied by a robot or another wall, this command will be ignored!
 
 ## Image links
 
