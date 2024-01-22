@@ -1,4 +1,5 @@
-import { useGameDispatch, useGameSelector } from '../store/hooks'
+import { useState } from 'react'
+import { useGameDispatch, useGameSelector } from '../../store/hooks'
 import {
   turnLeft,
   turnRight,
@@ -6,17 +7,20 @@ import {
   errorMessage,
   move,
   report,
-} from '../store/game-slice'
-import Button from './Button'
-import { useState } from 'react'
+} from '../../store/game-slice'
 
-export default function Controls() {
+import Button from '../ui/Button'
+import GameReport from './GameReport'
+import GameError from './GameError'
+
+export default function GameControls() {
   const {
     hasRobot,
     yLocation,
     xLocation,
     direction,
     report: reportRobot,
+    error,
   } = useGameSelector((state) => state.game)
 
   const [showReport, setShowReport] = useState(false)
@@ -71,20 +75,8 @@ export default function Controls() {
       {/* for testing */}
       <Button text='reset game' onClick={handleResetGame} />
 
-      {showReport && (
-        <div
-          style={{
-            height: '32px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '2px',
-          }}
-        >
-          <span>Row: {reportRobot[0]}</span>
-          <span>Col: {reportRobot[1]}</span>
-          <span>Dir: {reportRobot[2]}</span>
-        </div>
-      )}
+      {showReport && <GameReport report={reportRobot} />}
+      {error && <GameError error={error} />}
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { useGameSelector } from '../store/hooks'
+import { useGameSelector } from '../../store/hooks'
 
 type SquareProps = {
   x: number

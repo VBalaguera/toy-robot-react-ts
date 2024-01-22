@@ -1,11 +1,11 @@
-import { useGameSelector } from '../store/hooks'
+import { useGameSelector } from '../../store/hooks'
 
-import Board from './Board'
+import Board from '../board/Board'
 
-import Piece from './Piece'
-import Container from './ui/Container'
+import Piece from '../board/Piece'
+import Container from '../ui/Container'
 
-import GameControls from './GameControls'
+import GameControlPanel from './GameControlPanel'
 import GameInstructions from './GameInstructions'
 
 function Game() {
@@ -23,7 +23,7 @@ function Game() {
         </div>
 
         <div className='game-controls'>
-          <GameControls />
+          <GameControlPanel />
           <GameInstructions />
         </div>
       </Container>
