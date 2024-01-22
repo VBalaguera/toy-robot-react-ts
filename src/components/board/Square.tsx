@@ -9,7 +9,7 @@ type SquareProps = {
 }
 
 export default function Square({ x, y, children }: SquareProps) {
-  const coordinates = [x, y]
+  const coordinates = [x + 1, y + 1]
 
   const blockedSquares = useGameSelector((state) => state.game.blockedSquares)
 

@@ -16,20 +16,25 @@ export default function Board({ yLocation, xLocation, children }: BoardProps) {
 
   return (
     <div className='board-container'>
+      {xLocation}
+      {yLocation}
       <div className='board'>
+        {/*  */}
         {Array.from({ length: rows }, (_, rowIndex) =>
           Array.from({ length: columns }, (_, colIndex) => (
-            <>
-              <Square x={rowIndex} y={colIndex} />
-            </>
+            <Square
+              key={rowIndex + 1 * colIndex + 1}
+              x={rowIndex}
+              y={colIndex}
+            />
           ))
         )}
         {/* positions the piece */}
         <div
           className='board-piece'
           style={{
-            top: `calc(0px + 72px * ${xLocation})`,
-            left: `calc(0px + 72px * ${yLocation})`,
+            top: `calc(72px * (${xLocation} - 1))`,
+            left: `calc(72px * (${yLocation} - 1))`,
           }}
         >
           {xLocation !== undefined && yLocation !== undefined && children}
@@ -38,13 +43,17 @@ export default function Board({ yLocation, xLocation, children }: BoardProps) {
       {/* row */}
       <div className='board-down'>
         {Array.from({ length: 1 }, () =>
-          Array.from({ length: 5 }, (_, rowIndex) => <div>{rowIndex + 1}</div>)
+          Array.from({ length: 5 }, (_, rowIndex) => (
+            <div key={rowIndex + 1}>{rowIndex + 1}</div>
+          ))
         )}
       </div>
       {/* column */}
       <div className='board-right'>
         {Array.from({ length: 5 }, (_, colIndex) =>
-          Array.from({ length: 1 }, () => <div>{colIndex + 1}</div>)
+          Array.from({ length: 1 }, () => (
+            <div key={colIndex + 1}>{colIndex + 1}</div>
+          ))
         )}
       </div>
       <div className='board-empty'>

@@ -1,4 +1,4 @@
-import Text from '../ui/Text'
+import Text from '../../ui/Text'
 
 export default function GameHeading() {
   return (

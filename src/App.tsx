@@ -2,7 +2,7 @@ import { Provider } from 'react-redux'
 import { store } from './store/store'
 
 import Game from './components/game/Game'
-import GameHeading from './components/game/GameHeading'
+import GameHeading from './components/game/GameUI/GameHeading'
 
 function App() {
   return (

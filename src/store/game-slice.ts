@@ -9,6 +9,7 @@ import {
   resetRobotGame,
   turnRobotLeft,
   turnRobotRight,
+  gameOver,
 } from './reducers'
 
 export type BlockedSquare = [y: number, x: number]
@@ -35,6 +36,7 @@ export type Game = {
   // TODO: return to commandsLog
   // in the near future
   commandsLog: Command[]
+  isGameOver: boolean
 }
 
 const initialState: Game = {
@@ -43,9 +45,35 @@ const initialState: Game = {
   direction: undefined,
   hasRobot: false,
   error: undefined,
-  blockedSquares: [],
+  blockedSquares: [
+    [1, 1],
+    [1, 2],
+    [1, 3],
+    [1, 4],
+    [1, 5],
+    [2, 1],
+    [2, 2],
+    [2, 3],
+    [2, 4],
+    [2, 5],
+    [3, 1],
+    [3, 2],
+    [3, 3],
+    [3, 4],
+    [3, 5],
+    [4, 1],
+    [4, 2],
+    [4, 3],
+    [4, 4],
+    [4, 5],
+    [5, 1],
+    [5, 2],
+    [5, 3],
+    [5, 4],
+  ],
   report: [undefined, undefined, undefined],
   commandsLog: [],
+  isGameOver: false,
 }
 
 export const gameSlice = createSlice({
@@ -66,6 +94,7 @@ export const gameSlice = createSlice({
     // ADDITIONAL COMMANDS
     // RESET GAME
     resetGame: resetRobotGame,
+    isGameOver: gameOver,
     // ERROR
     errorMessage: addErrorMessage,
   },
@@ -79,5 +108,6 @@ export const {
   move,
   report,
   resetGame,
+  isGameOver,
   errorMessage,
 } = gameSlice.actions

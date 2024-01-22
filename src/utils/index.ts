@@ -13,32 +13,34 @@ import {
 
 // all board's squares' positions
 const allBlockedSquares = [
-  [0, 0],
-  [0, 1],
-  [0, 2],
-  [0, 3],
-  [0, 4],
-  [1, 0],
   [1, 1],
   [1, 2],
   [1, 3],
   [1, 4],
-  [2, 0],
+  [1, 5],
   [2, 1],
   [2, 2],
   [2, 3],
   [2, 4],
-  [3, 0],
+  [2, 5],
   [3, 1],
   [3, 2],
   [3, 3],
   [3, 4],
-  [4, 0],
+  [3, 5],
   [4, 1],
   [4, 2],
   [4, 3],
   [4, 4],
+  [4, 5],
+  [5, 1],
+  [5, 2],
+  [5, 3],
+  [5, 4],
+  [5, 5],
 ]
+
+const allValidCoordinates = ['1', '2', '3', '4', '5']
 
 // compares two arrays of numbers,
 // returns boolean
@@ -80,13 +82,14 @@ function checkLastArray(
   return arrayOfArrays
 }
 
+// process inputs, returns string
 function processInput(text: FormDataEntryValue): string[] {
   const processedInput = String(text).toUpperCase()
   const commands = processedInput.split(/[,\s]+/)
   return commands
 }
 
-// submit game form
+// submit game form helper
 function submitForm(
   dispatch: Dispatch,
   hasRobot: boolean,
@@ -110,7 +113,11 @@ function submitForm(
         break
       // PLACE_WALL
       case 'PLACE_WALL':
-        if (commands.length !== 3) {
+        if (
+          commands.length !== 3 ||
+          !allValidCoordinates.includes(commands[1]) ||
+          !allValidCoordinates.includes(commands[2])
+        ) {
           dispatch(errorMessage('Please write a valid command'))
           return
         }
@@ -159,7 +166,11 @@ function submitForm(
         break
       //   PLACE_WALL
       case 'PLACE_WALL':
-        if (commands.length !== 3) {
+        if (
+          commands.length !== 3 ||
+          !allValidCoordinates.includes(commands[1]) ||
+          !allValidCoordinates.includes(commands[2])
+        ) {
           dispatch(errorMessage('Please write a valid command'))
           return
         }
@@ -198,6 +209,7 @@ function submitForm(
 export {
   compareArrays,
   allBlockedSquares,
+  allValidCoordinates,
   checkIfArrayContainsArray,
   checkLastArray,
   processInput,

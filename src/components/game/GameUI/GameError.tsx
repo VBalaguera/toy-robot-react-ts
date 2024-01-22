@@ -1,4 +1,4 @@
-import Text from '../ui/Text'
+import Text from '../../ui/Text'
 
 type GameErrorProps = {
   error: string

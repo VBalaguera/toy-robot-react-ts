@@ -1,4 +1,4 @@
-import { Report } from '../../store/game-slice'
+import { Report } from '../../../store/game-slice'
 
 type GameReportProps = {
   report: Report

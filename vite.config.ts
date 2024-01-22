@@ -12,4 +12,9 @@ export default defineConfig({
       exclude: [],
     }),
   ],
+  server: {
+    watch: {
+      ignored: ['**/coverage/**'],
+    },
+  },
 })

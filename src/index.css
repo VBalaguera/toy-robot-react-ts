@@ -4,8 +4,7 @@
   font-family: 'Roboto', sans-serif, Helvetica, Arial, sans-serif;
 
   color-scheme: dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: black;
+
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,12 +12,12 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+
 
   height: 100% !important;
   width: 100% !important;
+
 }
 
 .app {
@@ -28,6 +27,7 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
+  padding: 1rem 0;
 }
 
 a {
@@ -46,6 +46,8 @@ body {
   box-sizing: border-box;
   height: 100vh;
   width: 100vw;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: black;
 }
 
 ol,
@@ -231,8 +233,8 @@ p {
   color: white;
 }
 
-/* Controls */
-.controls {
+/* GameControlsCommands */
+.game-controls-controls {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -267,13 +269,12 @@ p {
   width: 100%;
 }
 
-.game-container {
+.game-board {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  width: 500px;
 }
 
 .game-controls {
@@ -281,7 +282,7 @@ p {
   align-items: flex-start;
   justify-content: flex-start;
   gap: 10px;
-  width: 500px;
+  width: 600px;
   height: 100%;
 }
 
@@ -292,7 +293,7 @@ p {
   justify-content: flex-start;
   gap: 10px;
   height: 100%;
-  width: 27%;
+  width: 35%;
 
 }
 
@@ -303,7 +304,7 @@ p {
   flex-direction: column;
 
   gap: 10px;
-  width: 73%;
+  width: 65%;
 
   border: 1px solid green;
   border-radius: 2px;
@@ -410,6 +411,10 @@ p {
 /* responsive */
 
 @media screen and (max-width: 1280px) {
+  .board-container {
+    transform: scale(95%);
+  }
+
   .container {
     display: flex;
     flex-direction: column;
@@ -418,12 +423,13 @@ p {
     gap: 10px;
   }
 
-  .game-container {
-    width: auto;
+  .container {
+    min-height: auto;
+    width: 100%;
   }
 
   .game-controls {
-    width: auto;
+    width: 90%;
     min-height: 400px;
   }
 }
@@ -433,15 +439,6 @@ p {
   .app {
     justify-content: flex-start;
   }
-
-  .game-container {
-    height: 400px;
-  }
-
-  .game-controls {
-    width: 100%;
-  }
-
 
   .game-heading {
     margin-bottom: 0px;
@@ -463,12 +460,17 @@ p {
 
 @media screen and (max-width: 480px) {
 
+  .game-board {
+    height: 400px;
+  }
+
   .game-controls {
+    width: 100%;
     justify-content: center;
   }
 
   .game-controls-inputs {
-    width: 20%;
+    width: 25%;
   }
 
   .game-controls-instructions {
@@ -480,7 +482,7 @@ p {
     gap: 1px;
   }
 
-  .game-container {
+  .game-board {
     width: 100%;
   }
 
@@ -513,5 +515,11 @@ p {
 @media screen and (max-width: 380px) {
   .board-container {
     transform: scale(75%);
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .board-container {
+    transform: scale(70%);
   }
 }

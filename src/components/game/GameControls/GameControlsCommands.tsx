@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useGameDispatch, useGameSelector } from '../../store/hooks'
+import { useGameDispatch, useGameSelector } from '../../../store/hooks'
 import {
   turnLeft,
   turnRight,
@@ -7,20 +7,18 @@ import {
   errorMessage,
   move,
   report,
-} from '../../store/game-slice'
+} from '../../../store/game-slice'
 
-import Button from '../ui/Button'
-import GameReport from './GameReport'
-import GameError from './GameError'
+import Button from '../../ui/Button'
+import GameReport from '../GameUI/GameReport'
+import GameError from '../GameUI/GameError'
 
-export default function GameControls() {
+export default function GameControlsCommands() {
   const {
     hasRobot,
-    yLocation,
-    xLocation,
-    direction,
     report: reportRobot,
     error,
+    isGameOver,
   } = useGameSelector((state) => state.game)
 
   const [showReport, setShowReport] = useState(false)
@@ -32,7 +30,6 @@ export default function GameControls() {
     dispatch(errorMessage(''))
     dispatch(report())
     setShowReport(true)
-    console.log(yLocation, xLocation, direction)
   }
 
   //   LEFT
@@ -55,21 +52,28 @@ export default function GameControls() {
     dispatch(move())
   }
   return (
-    <div className='controls'>
-      <Button text='MOVE' onClick={handleMove} disabled={!hasRobot} />
-
-      <Button text='REPORT' onClick={handleReport} disabled={!hasRobot} />
+    <div className='game-controls-controls'>
+      <Button
+        text='MOVE'
+        onClick={handleMove}
+        disabled={!hasRobot || isGameOver}
+      />
+      <Button
+        text='REPORT'
+        onClick={handleReport}
+        disabled={!hasRobot || isGameOver}
+      />
 
       <Button
         text='TURN LEFT'
         onClick={handleMovePieceLeft}
-        disabled={!hasRobot}
+        disabled={!hasRobot || isGameOver}
       />
 
       <Button
         text='TURN RIGHT'
         onClick={handleMovePieceRight}
-        disabled={!hasRobot}
+        disabled={!hasRobot || isGameOver}
       />
 
       {/* for testing */}

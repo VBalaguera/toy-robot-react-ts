@@ -13,10 +13,7 @@ function placeRobotOnBoard(
     hasRobot?: boolean
   }>
 ) {
-  const coordinates = [
-    action.payload.xLocation - 1,
-    action.payload.yLocation - 1,
-  ]
+  const coordinates = [action.payload.xLocation, action.payload.yLocation]
   const alreadyBlocked = checkIfArrayContainsArray(
     state.blockedSquares,
     coordinates
@@ -30,7 +27,7 @@ function placeRobotOnBoard(
     action.payload.yLocation < 0
   ) {
     state.error =
-      'Invalid coordinates. Please enter valid coordinates: [0 to 5, 0 to 5]'
+      'Invalid coordinates. Please enter valid coordinates: [1 to 5, 1 to 5]'
   } else if (!action.payload.direction) {
     state.error = 'Please enter a direction'
   } else if (
@@ -41,8 +38,8 @@ function placeRobotOnBoard(
   ) {
     return {
       ...state,
-      xLocation: action.payload.xLocation - 1,
-      yLocation: action.payload.yLocation - 1,
+      xLocation: action.payload.xLocation,
+      yLocation: action.payload.yLocation,
       direction: action.payload.direction,
       hasRobot: true,
     }
@@ -59,10 +56,7 @@ function placeWallOnBoard(
     xLocation: number
   }>
 ) {
-  const coordinates = [
-    action.payload.yLocation - 1,
-    action.payload.xLocation - 1,
-  ]
+  const coordinates = [action.payload.yLocation, action.payload.xLocation]
   const alreadyBlocked = checkIfArrayContainsArray(
     state.blockedSquares,
     coordinates
@@ -70,8 +64,8 @@ function placeWallOnBoard(
   if (alreadyBlocked) {
     state.error = 'Already blocked'
   } else if (
-    state.yLocation === action.payload.yLocation - 1 &&
-    state.xLocation === action.payload.xLocation - 1
+    state.yLocation === action.payload.yLocation &&
+    state.xLocation === action.payload.xLocation
   ) {
     state.error = 'There is a robot already there!'
   } else if (
@@ -81,11 +75,11 @@ function placeWallOnBoard(
     action.payload.xLocation < 0
   ) {
     state.error =
-      'Invalid coordinates. Please enter valid coordinates: [0 to 5, 0 to 5]'
+      'Invalid coordinates. Please enter valid coordinates: [1 to 5, 1 to 5]'
   } else {
     state.blockedSquares.push([
-      action.payload.yLocation - 1,
-      action.payload.xLocation - 1,
+      action.payload.yLocation,
+      action.payload.xLocation,
     ])
   }
 }
@@ -134,7 +128,6 @@ function turnRobotRight(state: Game) {
       return
   }
 }
-
 // MOVE
 function moveRobot(state: Game) {
   let coordinates: number[]
@@ -145,10 +138,8 @@ function moveRobot(state: Game) {
   } else if (state.yLocation !== undefined && state.xLocation !== undefined) {
     switch (state.direction) {
       case 'NORTH':
-        console.log('north')
-
-        if (state.yLocation === 4) {
-          coordinates = [state.xLocation, 0]
+        if (state.yLocation === 5) {
+          coordinates = [state.xLocation, 1]
           alreadyBlocked = checkIfArrayContainsArray(
             state.blockedSquares,
             coordinates
@@ -157,7 +148,7 @@ function moveRobot(state: Game) {
             state.error = 'Already blocked'
             return
           }
-          state.yLocation = 0
+          state.yLocation = 1
         } else {
           coordinates = [state.xLocation, state.yLocation + 1]
           alreadyBlocked = checkIfArrayContainsArray(
@@ -172,10 +163,9 @@ function moveRobot(state: Game) {
         }
         break
       case 'WEST':
-        console.log('WEST')
         {
-          if (state.xLocation === 0) {
-            coordinates = [4, state.yLocation]
+          if (state.xLocation === 1) {
+            coordinates = [5, state.yLocation]
             alreadyBlocked = checkIfArrayContainsArray(
               state.blockedSquares,
               coordinates
@@ -184,7 +174,7 @@ function moveRobot(state: Game) {
               state.error = 'Already blocked'
               return
             }
-            state.xLocation = 4
+            state.xLocation = 5
           } else {
             coordinates = [state.xLocation - 1, state.yLocation]
             alreadyBlocked = checkIfArrayContainsArray(
@@ -200,9 +190,8 @@ function moveRobot(state: Game) {
         }
         break
       case 'SOUTH':
-        console.log('south')
-        if (state.yLocation === 0) {
-          coordinates = [state.xLocation, 4]
+        if (state.yLocation === 1) {
+          coordinates = [state.xLocation, 5]
           alreadyBlocked = checkIfArrayContainsArray(
             state.blockedSquares,
             coordinates
@@ -211,7 +200,7 @@ function moveRobot(state: Game) {
             state.error = 'Already blocked'
             return
           }
-          state.yLocation = 4
+          state.yLocation = 5
         } else {
           coordinates = [state.xLocation, state.yLocation - 1]
           alreadyBlocked = checkIfArrayContainsArray(
@@ -224,12 +213,10 @@ function moveRobot(state: Game) {
           }
           state.yLocation--
         }
-
         break
       case 'EAST':
-        console.log('east')
-        if (state.xLocation === 4) {
-          coordinates = [0, state.yLocation]
+        if (state.xLocation === 5) {
+          coordinates = [1, state.yLocation]
           alreadyBlocked = checkIfArrayContainsArray(
             state.blockedSquares,
             coordinates
@@ -238,7 +225,7 @@ function moveRobot(state: Game) {
             state.error = 'Already blocked'
             return
           }
-          state.xLocation = 0
+          state.xLocation = 1
         } else {
           coordinates = [state.xLocation + 1, state.yLocation]
           alreadyBlocked = checkIfArrayContainsArray(
@@ -256,11 +243,12 @@ function moveRobot(state: Game) {
   } else return
 }
 
+// REPORT
 function reportRobot(state: Game) {
   if (!state.hasRobot) return
   if (state.yLocation === undefined || state.xLocation === undefined) return
 
-  state.report = [state.xLocation + 1, state.yLocation + 1, state.direction]
+  state.report = [state.xLocation, state.yLocation, state.direction]
 
   // state.commandsLog = [
   //   [state.xLocation + 1, state.yLocation + 1, state.direction],
@@ -287,6 +275,12 @@ function resetRobotGame(state: Game) {
 function addErrorMessage(state: Game, action: PayloadAction<string>) {
   state.error = action.payload
 }
+// GAME OVER
+function gameOver(state: Game) {
+  state.isGameOver = true
+  state.error =
+    "All the walls are covered! The robot wanted to play today, but you didn't allowed it to! Game Over."
+}
 export {
   placeRobotOnBoard,
   placeWallOnBoard,
@@ -296,4 +290,5 @@ export {
   reportRobot,
   resetRobotGame,
   addErrorMessage,
+  gameOver,
 }
