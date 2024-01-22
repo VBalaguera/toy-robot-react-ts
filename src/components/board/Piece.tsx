@@ -3,7 +3,7 @@
 // for all purposes of this assignment
 // it will be a robot
 
-import robot from '../assets/robot-svgrepo-com.svg'
+import robot from '../../assets/robot-svgrepo-com.svg'
 
 type PieceProps = {
   direction?: string

@@ -1,18 +1,18 @@
-import { useGameDispatch, useGameSelector } from '../store/hooks'
-import { errorMessage } from '../store/game-slice'
+import { useGameDispatch, useGameSelector } from '../../store/hooks'
+import { errorMessage } from '../../store/game-slice'
 
 import {
   allBlockedSquares,
   compareArrays,
   processInput,
   submitForm,
-} from '../utils'
+} from '../../utils'
 
-import Input from './Input'
-import Button from './Button'
+import Input from '../ui/Input'
+import Button from '../ui/Button'
 import { FormEvent, useState, useEffect } from 'react'
 
-export default function Form() {
+export default function GameForm() {
   const { hasRobot } = useGameSelector((state) => state.game)
 
   const [command, setCommand] = useState('')
@@ -51,6 +51,7 @@ export default function Form() {
         <Input
           name='command'
           id='command'
+          data-testid='commandInputElement'
           type='text'
           value={command}
           onChange={(e) => setCommand(e.target.value)}

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { useGameSelector } from '../store/hooks'
+import { useGameSelector } from '../../store/hooks'
 
 type SquareProps = {
   x: number
@@ -9,7 +9,7 @@ type SquareProps = {
 }
 
 export default function Square({ x, y, children }: SquareProps) {
-  const coordinates = [y, x]
+  const coordinates = [x, y]
 
   const blockedSquares = useGameSelector((state) => state.game.blockedSquares)
 
@@ -21,7 +21,7 @@ export default function Square({ x, y, children }: SquareProps) {
 
   return (
     <span className={`square ${blocked ? 'blocked' : ''}`}>
-      y: {y + 1}; x: {x + 1}
+      <span>row: {x + 1};</span> <span>col: {y + 1}.</span>
       {children}
     </span>
   )

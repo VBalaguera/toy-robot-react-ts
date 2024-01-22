@@ -1,15 +1,15 @@
 import { Provider } from 'react-redux'
 import { store } from './store/store'
 
-import Game from './components/Game'
-import Title from './components/Title'
+import Game from './components/game/Game'
+import GameHeading from './components/game/GameHeading'
 
 function App() {
   return (
     <>
       <Provider store={store}>
-        <div>
-          <Title />
+        <div className='app'>
+          <GameHeading />
           <Game />
         </div>
       </Provider>

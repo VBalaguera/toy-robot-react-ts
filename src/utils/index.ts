@@ -95,11 +95,14 @@ function submitForm(
   if (!hasRobot) {
     switch (commands[0]) {
       case 'PLACE_ROBOT':
-        // TODO: additional checks for command length?
+        if (commands.length !== 4) {
+          dispatch(errorMessage('Please write a valid command'))
+          return
+        }
         dispatch(
           placeRobot({
-            yLocation: +commands[1],
-            xLocation: +commands[2],
+            xLocation: +commands[1],
+            yLocation: +commands[2],
             direction: commands[3],
             hasRobot: true,
           })
@@ -107,7 +110,10 @@ function submitForm(
         break
       // PLACE_WALL
       case 'PLACE_WALL':
-        // TODO: additional checks for command length
+        if (commands.length !== 3) {
+          dispatch(errorMessage('Please write a valid command'))
+          return
+        }
         dispatch(
           placeWall({
             yLocation: +commands[1],
@@ -137,8 +143,11 @@ function submitForm(
     }
   } else {
     switch (commands[0]) {
-      // PLACE_ROBOT
       case 'PLACE_ROBOT':
+        if (commands.length !== 4) {
+          dispatch(errorMessage('Please write a valid command'))
+          return
+        }
         dispatch(
           placeRobot({
             yLocation: +commands[1],
@@ -150,6 +159,10 @@ function submitForm(
         break
       //   PLACE_WALL
       case 'PLACE_WALL':
+        if (commands.length !== 3) {
+          dispatch(errorMessage('Please write a valid command'))
+          return
+        }
         dispatch(
           placeWall({
             yLocation: +commands[1],
