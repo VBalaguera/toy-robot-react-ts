@@ -1,7 +1,7 @@
 {
   "short_name": "freeman",
   "name": "toy-robot-react-ts",
-  "description": "An old challenge, made this time with vite, react.js, typescript, and jest/react-testing",
+  "description": "An old coding challenge, made this time with vite, react.js, typescript, and jest/react-testing.",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

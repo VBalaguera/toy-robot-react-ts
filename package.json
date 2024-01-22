@@ -2,7 +2,7 @@
   "name": "toy-robot-react-ts",
   "version": "0.0.1",
   "author": "Víctor Balaguera <victorbalaguera@protonmail.com>",
-  "description": "An old challenge, made this time with vite, react.js, typescript, and jest/react-testing",
+  "description": "an old coding challenge, made this time with vite, react.js, typescript, and jest/react-testing.",
   "keywords": [
     "react",
     "vite",

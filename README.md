@@ -1,6 +1,6 @@
 # Toy robot game
 
-DESCRIPTION: This is a classic coding challenge that uses vite, react, typescript, jest and react-testing.
+DESCRIPTION: this is an old coding challenge, made this time with vite, react.js, typescript, and jest/react-testing.
 
 LIVE version available [here](https://toy-robot-react-ts.vercel.app/).
 
